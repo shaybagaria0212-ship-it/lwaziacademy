@@ -1,0 +1,449 @@
+/* Lwazi Academy — Shared Styles */
+
+/* ===== CSS Reset & Variables ===== */
+:root {
+    --primary: #000a1e;
+    --primary-container: #002147;
+    --on-primary: #ffffff;
+    --on-primary-container: #708ab5;
+    --tertiary: #735c00;
+    --tertiary-container: #cca830;
+    --tertiary-fixed: #ffe088;
+    --tertiary-fixed-dim: #e9c349;
+    --on-tertiary: #ffffff;
+    --surface: #faf9fd;
+    --surface-container: #efedf1;
+    --surface-container-low: #f4f3f7;
+    --surface-container-high: #e9e7eb;
+    --on-surface: #1a1b1e;
+    --on-surface-variant: #44474e;
+    --outline: #74777f;
+    --outline-variant: #c4c6cf;
+    --error: #ba1a1a;
+    --error-container: #ffdad6;
+    --on-error: #ffffff;
+    --shadow-color: 0 0% 0%;
+    --font-headline: 'Newsreader', serif;
+    --font-body: 'Manrope', sans-serif;
+}
+
+/* ===== Form Components ===== */
+.lwazi-input {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1.5px solid var(--outline-variant);
+    color: var(--on-surface);
+    font-family: var(--font-body);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    outline: none;
+}
+.lwazi-input:focus {
+    border-color: var(--primary-container);
+    box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.08);
+}
+.lwazi-input::placeholder {
+    color: var(--outline);
+}
+
+.lwazi-label {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--on-surface-variant);
+    margin-bottom: 8px;
+}
+
+.lwazi-select {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1.5px solid var(--outline-variant);
+    color: var(--on-surface);
+    font-family: var(--font-body);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    outline: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2374777f' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    cursor: pointer;
+}
+.lwazi-select:focus {
+    border-color: var(--primary-container);
+    box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.08);
+}
+
+.lwazi-textarea {
+    width: 100%;
+    padding: 16px 20px;
+    background: var(--surface);
+    border: 1.5px solid var(--outline-variant);
+    color: var(--on-surface);
+    font-family: var(--font-body);
+    font-size: 15px;
+    transition: all 0.3s ease;
+    outline: none;
+    resize: vertical;
+    min-height: 120px;
+}
+.lwazi-textarea:focus {
+    border-color: var(--primary-container);
+    box-shadow: 0 0 0 3px rgba(0, 33, 71, 0.08);
+}
+
+/* ===== Buttons ===== */
+.lwazi-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--primary-container);
+    color: var(--on-primary);
+    padding: 16px 32px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.lwazi-btn-primary:hover {
+    background: var(--primary);
+    box-shadow: 0 8px 32px rgba(0, 10, 30, 0.15);
+    transform: translateY(-1px);
+}
+.lwazi-btn-primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.lwazi-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--primary-container);
+    padding: 16px 32px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: 1.5px solid var(--outline-variant);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.lwazi-btn-secondary:hover {
+    border-color: var(--primary-container);
+    background: rgba(0, 33, 71, 0.04);
+}
+
+.lwazi-btn-gold {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--tertiary-container);
+    color: var(--on-tertiary);
+    padding: 16px 32px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(204, 168, 48, 0.2);
+}
+.lwazi-btn-gold:hover {
+    background: var(--tertiary);
+    box-shadow: 0 8px 32px rgba(204, 168, 48, 0.3);
+    transform: translateY(-1px);
+}
+
+/* ===== Cards ===== */
+.lwazi-card {
+    background: var(--surface);
+    border: 1px solid var(--outline-variant);
+    padding: 32px;
+    transition: all 0.3s ease;
+}
+.lwazi-card:hover {
+    border-color: var(--primary-container);
+    box-shadow: 0 8px 40px rgba(0, 10, 30, 0.08);
+    transform: translateY(-2px);
+}
+
+/* ===== Role Toggle ===== */
+.role-toggle {
+    display: flex;
+    background: var(--surface-container-high);
+    padding: 4px;
+    gap: 4px;
+}
+.role-toggle button {
+    flex: 1;
+    padding: 14px 24px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: transparent;
+    color: var(--on-surface-variant);
+}
+.role-toggle button.active {
+    background: var(--primary-container);
+    color: var(--on-primary);
+    box-shadow: 0 2px 8px rgba(0, 33, 71, 0.2);
+}
+
+/* ===== Tag / Chip ===== */
+.lwazi-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 14px;
+    background: var(--surface-container-low);
+    border: 1px solid var(--outline-variant);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 12px;
+    color: var(--on-surface-variant);
+    white-space: nowrap;
+}
+.lwazi-chip.gold {
+    background: rgba(204, 168, 48, 0.1);
+    border-color: var(--tertiary-container);
+    color: var(--tertiary);
+}
+
+/* ===== Stars ===== */
+.star-rating {
+    display: inline-flex;
+    gap: 2px;
+    color: var(--tertiary-container);
+}
+.star-rating .material-symbols-outlined {
+    font-size: 18px;
+    font-variation-settings: 'FILL' 1;
+}
+.star-rating .empty {
+    font-variation-settings: 'FILL' 0;
+    color: var(--outline-variant);
+}
+
+/* ===== Status Badge ===== */
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+.status-badge.pending {
+    background: #fff3e0;
+    color: #e65100;
+}
+.status-badge.confirmed {
+    background: #e8f5e9;
+    color: #2e7d32;
+}
+.status-badge.completed {
+    background: #e3f2fd;
+    color: #1565c0;
+}
+.status-badge.cancelled {
+    background: var(--error-container);
+    color: var(--error);
+}
+
+/* ===== Alert / Toast ===== */
+.lwazi-alert {
+    padding: 16px 20px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    animation: slideDown 0.3s ease;
+}
+.lwazi-alert.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border-left: 4px solid #2e7d32;
+}
+.lwazi-alert.error {
+    background: var(--error-container);
+    color: var(--error);
+    border-left: 4px solid var(--error);
+}
+.lwazi-alert.info {
+    background: #e3f2fd;
+    color: #1565c0;
+    border-left: 4px solid #1565c0;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== Modal ===== */
+.lwazi-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 10, 30, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: fadeIn 0.2s ease;
+}
+.lwazi-modal {
+    background: var(--surface);
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    animation: scaleIn 0.3s ease;
+}
+.lwazi-modal-header {
+    padding: 28px 32px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.lwazi-modal-body {
+    padding: 24px 32px 32px;
+}
+.lwazi-modal-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--on-surface-variant);
+    transition: color 0.2s;
+}
+.lwazi-modal-close:hover {
+    color: var(--on-surface);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+@keyframes scaleIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* ===== Loading Spinner ===== */
+.lwazi-spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid var(--outline-variant);
+    border-top-color: var(--primary-container);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* ===== Empty State ===== */
+.lwazi-empty {
+    text-align: center;
+    padding: 64px 32px;
+}
+.lwazi-empty .material-symbols-outlined {
+    font-size: 64px;
+    color: var(--outline-variant);
+    margin-bottom: 16px;
+}
+.lwazi-empty h3 {
+    font-family: var(--font-headline);
+    font-size: 24px;
+    color: var(--on-surface);
+    margin-bottom: 8px;
+}
+.lwazi-empty p {
+    color: var(--on-surface-variant);
+    font-size: 15px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+/* ===== Checkbox Multi-select ===== */
+.checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+}
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid var(--outline-variant);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: var(--font-body);
+    font-size: 13px;
+    color: var(--on-surface-variant);
+}
+.checkbox-item:hover {
+    border-color: var(--primary-container);
+}
+.checkbox-item.selected {
+    border-color: var(--primary-container);
+    background: rgba(0, 33, 71, 0.04);
+    color: var(--primary-container);
+    font-weight: 600;
+}
+.checkbox-item input[type="checkbox"] {
+    accent-color: var(--primary-container);
+}
+
+/* ===== Page Layout ===== */
+.page-container {
+    min-height: calc(100vh - 73px);
+    padding-top: 1px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+    .lwazi-card {
+        padding: 24px;
+    }
+    .lwazi-btn-primary,
+    .lwazi-btn-secondary,
+    .lwazi-btn-gold {
+        padding: 14px 24px;
+        width: 100%;
+    }
+    .checkbox-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}

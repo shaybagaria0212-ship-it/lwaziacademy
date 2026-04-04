@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Dashboard | Lwazi Academy</title>
+    <meta name="description" content="Your Lwazi Academy dashboard — manage sessions, view your profile, and track your academic progress."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/shared.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant":"#c4c6cf","tertiary":"#735c00","surface-container-low":"#f4f3f7",
+                        "on-tertiary":"#ffffff","tertiary-container":"#cca830","outline":"#74777f",
+                        "on-primary":"#ffffff","surface-container-high":"#e9e7eb","primary-container":"#002147",
+                        "error":"#ba1a1a","on-surface-variant":"#44474e","on-surface":"#1a1b1e",
+                        "primary":"#000a1e","surface":"#faf9fd","surface-container":"#efedf1",
+                        "surface-container-lowest":"#ffffff","error-container":"#ffdad6","tertiary-fixed-dim":"#e9c349",
+                        "on-primary-container":"#708ab5","tertiary-fixed":"#ffe088"
+                    },
+                    fontFamily: { headline: ["Newsreader"], body: ["Manrope"], label: ["Manrope"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface">
+    <!-- Header -->
+    <header class="bg-surface sticky top-0 z-50 border-b border-outline-variant/10">
+        <div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+            <a href="/" class="flex items-center gap-3 no-underline">
+                <span class="material-symbols-outlined text-primary-container">school</span>
+                <span class="text-2xl font-semibold text-primary-container font-headline tracking-tight">Lwazi Academy</span>
+            </a>
+            <nav class="hidden md:flex gap-8 items-center">
+                <a class="font-body font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-1 no-underline" href="/tutors.html">Discover Mentors</a>
+                <a class="font-body font-medium text-primary-container border-b-2 border-tertiary-container px-3 py-1 no-underline" href="/dashboard.html">Dashboard</a>
+                <div class="auth-area flex items-center gap-4"></div>
+            </nav>
+        </div>
+    </header>
+    <div class="h-1 w-full bg-gradient-to-r from-tertiary-fixed-dim via-tertiary-container to-tertiary-fixed-dim"></div>
+
+    <main class="page-container">
+        <div class="container mx-auto px-6 max-w-7xl py-10">
+            <!-- Welcome Banner -->
+            <div class="bg-primary-container p-8 md:p-10 mb-10" id="welcome-banner">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div>
+                        <p class="font-label text-xs uppercase tracking-widest text-tertiary-fixed-dim mb-2" id="user-role-label">Student</p>
+                        <h1 class="text-3xl md:text-4xl font-headline text-white mb-2" id="welcome-name">Welcome back</h1>
+                        <p class="text-on-primary-container font-body" id="welcome-email"></p>
+                    </div>
+                    <a href="/tutors.html" class="lwazi-btn-gold text-xs no-underline" id="find-tutor-btn">
+                        <span class="material-symbols-outlined text-lg">search</span>
+                        Find a Tutor
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10" id="stats-grid">
+                <div class="bg-surface p-6 border border-outline-variant/20">
+                    <span class="material-symbols-outlined text-tertiary-container text-3xl mb-2">event</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-total">0</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Total Sessions</p>
+                </div>
+                <div class="bg-surface p-6 border border-outline-variant/20">
+                    <span class="material-symbols-outlined text-tertiary-container text-3xl mb-2">schedule</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-pending">0</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Pending</p>
+                </div>
+                <div class="bg-surface p-6 border border-outline-variant/20">
+                    <span class="material-symbols-outlined text-tertiary-container text-3xl mb-2">event_available</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-upcoming">0</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Upcoming</p>
+                </div>
+                <div class="bg-surface p-6 border border-outline-variant/20">
+                    <span class="material-symbols-outlined text-tertiary-container text-3xl mb-2">check_circle</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-completed">0</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Completed</p>
+                </div>
+            </div>
+
+            <!-- Alert Container -->
+            <div id="alert-container"></div>
+
+            <!-- Sessions Tabs -->
+            <div class="bg-surface border border-outline-variant/20">
+                <div class="flex border-b border-outline-variant/20 overflow-x-auto">
+                    <button class="px-6 py-4 font-label font-bold text-xs uppercase tracking-widest text-primary-container border-b-2 border-tertiary-container session-tab active" data-status="">All Sessions</button>
+                    <button class="px-6 py-4 font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container session-tab" data-status="pending">Pending</button>
+                    <button class="px-6 py-4 font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container session-tab" data-status="confirmed">Confirmed</button>
+                    <button class="px-6 py-4 font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container session-tab" data-status="completed">Completed</button>
+                    <button class="px-6 py-4 font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant hover:text-primary-container session-tab" data-status="cancelled">Cancelled</button>
+                </div>
+                <div id="sessions-list" class="p-6">
+                    <div class="flex justify-center py-12">
+                        <div class="lwazi-spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="lwazi-modal-overlay hidden">
+        <div class="lwazi-modal">
+            <div class="lwazi-modal-header">
+                <h2 class="font-headline text-2xl text-primary-container">Rate Your Session</h2>
+                <button class="lwazi-modal-close" onclick="closeReviewModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="lwazi-modal-body">
+                <div id="review-alert"></div>
+                <form id="review-form" class="space-y-6">
+                    <input type="hidden" id="review-session-id"/>
+                    <div>
+                        <label class="lwazi-label">Rating</label>
+                        <div class="flex gap-2" id="rating-stars">
+                            <button type="button" class="text-3xl text-outline-variant hover:text-tertiary-container transition-colors" data-rating="1">★</button>
+                            <button type="button" class="text-3xl text-outline-variant hover:text-tertiary-container transition-colors" data-rating="2">★</button>
+                            <button type="button" class="text-3xl text-outline-variant hover:text-tertiary-container transition-colors" data-rating="3">★</button>
+                            <button type="button" class="text-3xl text-outline-variant hover:text-tertiary-container transition-colors" data-rating="4">★</button>
+                            <button type="button" class="text-3xl text-outline-variant hover:text-tertiary-container transition-colors" data-rating="5">★</button>
+                        </div>
+                        <input type="hidden" id="review-rating" value="0"/>
+                    </div>
+                    <div>
+                        <label class="lwazi-label" for="review-comment">Your Review</label>
+                        <textarea class="lwazi-textarea" id="review-comment" placeholder="Share your experience..." rows="4"></textarea>
+                    </div>
+                    <button type="submit" class="lwazi-btn-gold w-full">
+                        <span class="material-symbols-outlined text-lg">send</span>
+                        Submit Review
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

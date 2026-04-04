@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Discover Mentors | Lwazi Academy</title>
+    <meta name="description" content="Browse and connect with top-rated South African tutors. Filter by subject, grade level, and price to find your ideal mentor."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/shared.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant":"#c4c6cf","tertiary":"#735c00","surface-container-low":"#f4f3f7",
+                        "on-tertiary":"#ffffff","tertiary-container":"#cca830","outline":"#74777f",
+                        "on-primary":"#ffffff","surface-container-high":"#e9e7eb","primary-container":"#002147",
+                        "error":"#ba1a1a","on-surface-variant":"#44474e","on-surface":"#1a1b1e",
+                        "primary":"#000a1e","surface":"#faf9fd","surface-container":"#efedf1",
+                        "surface-container-lowest":"#ffffff","error-container":"#ffdad6","tertiary-fixed-dim":"#e9c349",
+                        "on-primary-container":"#708ab5","tertiary-fixed":"#ffe088"
+                    },
+                    fontFamily: { headline: ["Newsreader"], body: ["Manrope"], label: ["Manrope"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+    <!-- Header -->
+    <header class="bg-surface sticky top-0 z-50 border-b border-outline-variant/10">
+        <div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+            <a href="/" class="flex items-center gap-3 no-underline">
+                <span class="material-symbols-outlined text-primary-container">school</span>
+                <span class="text-2xl font-semibold text-primary-container font-headline tracking-tight">Lwazi Academy</span>
+            </a>
+            <nav class="hidden md:flex gap-8 items-center">
+                <a class="font-body font-medium text-primary-container border-b-2 border-tertiary-container px-3 py-1 no-underline" href="/tutors.html">Discover Mentors</a>
+                <a class="font-body font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-1 no-underline" href="/">Academic Success</a>
+                <div class="auth-area flex items-center gap-4"></div>
+            </nav>
+        </div>
+    </header>
+    <div class="h-1 w-full bg-gradient-to-r from-tertiary-fixed-dim via-tertiary-container to-tertiary-fixed-dim"></div>
+
+    <main class="page-container">
+        <!-- Page Header -->
+        <section class="bg-primary-container py-16 md:py-20">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <span class="text-tertiary-fixed-dim font-label text-sm uppercase tracking-widest font-bold mb-4 block">Mentor Directory</span>
+                <h1 class="text-4xl md:text-6xl font-headline text-white mb-4">Discover Your <span class="italic text-tertiary-fixed-dim">Perfect Mentor</span></h1>
+                <p class="text-on-primary-container font-body text-lg max-w-2xl">Browse our curated network of verified tutors, each bringing exceptional expertise and a proven track record of student success.</p>
+            </div>
+        </section>
+
+        <!-- Filters + Results -->
+        <section class="py-12">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <!-- Search & Filters -->
+                <div class="bg-surface-container-low p-6 md:p-8 mb-10 border border-outline-variant/20">
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="md:col-span-2">
+                            <div class="relative">
+                                <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline">search</span>
+                                <input class="lwazi-input pl-12" type="text" id="search-input" placeholder="Search by name, subject, or keyword..."/>
+                            </div>
+                        </div>
+                        <div>
+                            <select class="lwazi-select" id="subject-filter">
+                                <option value="">All Subjects</option>
+                                <option value="Mathematics">Mathematics</option>
+                                <option value="Physical Sciences">Physical Sciences</option>
+                                <option value="Life Sciences">Life Sciences</option>
+                                <option value="Accounting">Accounting</option>
+                                <option value="Business Studies">Business Studies</option>
+                                <option value="Economics">Economics</option>
+                                <option value="English">English</option>
+                                <option value="Afrikaans">Afrikaans</option>
+                                <option value="History">History</option>
+                                <option value="Geography">Geography</option>
+                                <option value="Information Technology">Information Technology</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select class="lwazi-select" id="sort-filter">
+                                <option value="rating">Highest Rated</option>
+                                <option value="price_low">Price: Low to High</option>
+                                <option value="price_high">Price: High to Low</option>
+                                <option value="experience">Most Experienced</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Count -->
+                <div class="flex justify-between items-center mb-8">
+                    <p class="font-body text-on-surface-variant text-sm" id="results-count">Loading mentors...</p>
+                </div>
+
+                <!-- Tutor Grid -->
+                <div id="tutors-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Loading State -->
+                    <div class="col-span-full flex justify-center py-20">
+                        <div class="lwazi-spinner"></div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div id="empty-state" class="hidden">
+                    <div class="lwazi-empty">
+                        <span class="material-symbols-outlined">search_off</span>
+                        <h3>No Mentors Found</h3>
+                        <p>Try adjusting your filters or search terms to find available mentors.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="lwazi-modal-overlay hidden">
+        <div class="lwazi-modal">
+            <div class="lwazi-modal-header">
+                <h2 class="font-headline text-2xl text-primary-container">Book a Session</h2>
+                <button class="lwazi-modal-close" onclick="closeBookingModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="lwazi-modal-body">
+                <div id="modal-alert"></div>
+                <div id="modal-tutor-info" class="mb-6 p-4 bg-surface-container-low"></div>
+                <form id="booking-form" class="space-y-6">
+                    <input type="hidden" id="booking-tutor-id"/>
+                    <div>
+                        <label class="lwazi-label" for="booking-subject">Subject</label>
+                        <select class="lwazi-select" id="booking-subject" required></select>
+                    </div>
+                    <div>
+                        <label class="lwazi-label" for="booking-date">Date & Time</label>
+                        <input class="lwazi-input" type="datetime-local" id="booking-date" required/>
+                    </div>
+                    <div>
+                        <label class="lwazi-label" for="booking-duration">Duration</label>
+                        <select class="lwazi-select" id="booking-duration">
+                            <option value="60">60 minutes</option>
+                            <option value="90">90 minutes</option>
+                            <option value="120">120 minutes</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="lwazi-label" for="booking-notes">Message to Tutor (optional)</label>
+                        <textarea class="lwazi-textarea" id="booking-notes" placeholder="Tell the tutor what you need help with..." rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="lwazi-btn-gold w-full" id="booking-submit-btn">
+                        <span class="material-symbols-outlined text-lg">event_available</span>
+                        Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/tutors.js"></script>
+</body>
+</html>

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Lwazi Academy | Student Success</title>
+    <meta name="description" content="Lwazi Academy connects South African students with top-tier tutors for personalised mentorship in Maths, Sciences, Languages, and more."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/shared.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant": "#c4c6cf", "inverse-surface": "#2f3033", "inverse-primary": "#aec7f6",
+                        "on-secondary-fixed-variant": "#3e4758", "tertiary": "#735c00",
+                        "surface-container-low": "#f4f3f7", "on-tertiary-fixed-variant": "#574500",
+                        "on-tertiary-fixed": "#241a00", "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a", "tertiary-container": "#cca830",
+                        "outline": "#74777f", "on-secondary": "#ffffff", "surface-variant": "#e3e2e6",
+                        "on-primary": "#ffffff", "surface-container-high": "#e9e7eb",
+                        "primary-fixed-dim": "#aec7f6", "secondary": "#565f70",
+                        "on-primary-fixed": "#001b3d", "on-secondary-container": "#5a6375",
+                        "primary-container": "#002147", "on-primary-fixed-variant": "#2d476f",
+                        "error": "#ba1a1a", "on-secondary-fixed": "#131c2b", "surface-dim": "#dad9dd",
+                        "secondary-fixed-dim": "#bec7db", "on-tertiary-container": "#4f3e00",
+                        "tertiary-fixed": "#ffe088", "surface-container-highest": "#e3e2e6",
+                        "on-surface-variant": "#44474e", "on-surface": "#1a1b1e",
+                        "primary": "#000a1e", "surface-container-lowest": "#ffffff",
+                        "on-background": "#1a1b1e", "secondary-container": "#d7e0f5",
+                        "primary-fixed": "#d6e3ff", "on-error": "#ffffff",
+                        "surface-container": "#efedf1", "surface": "#faf9fd",
+                        "secondary-fixed": "#dae3f8", "background": "#faf9fd",
+                        "surface-tint": "#465f88", "surface-bright": "#faf9fd",
+                        "on-primary-container": "#708ab5", "inverse-on-surface": "#f1f0f4",
+                        "error-container": "#ffdad6", "tertiary-fixed-dim": "#e9c349"
+                    },
+                    borderRadius: { DEFAULT: "0.125rem", lg: "0.25rem", xl: "0.5rem", full: "0.75rem" },
+                    fontFamily: { headline: ["Newsreader"], body: ["Manrope"], label: ["Manrope"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-tertiary-container selection:text-on-tertiary-container">
+    <!-- TopAppBar -->
+    <header class="bg-[#faf9fd] dark:bg-[#000a1e] sticky top-0 z-50 border-b border-outline-variant/10">
+        <div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+            <a href="/" class="flex items-center gap-3 no-underline">
+                <span class="material-symbols-outlined text-[#002147] dark:text-[#f4f3f7]">school</span>
+                <span class="text-2xl font-semibold text-[#002147] dark:text-[#faf9fd] font-['Newsreader'] tracking-tight">Lwazi Academy</span>
+            </a>
+            <nav class="hidden md:flex gap-8 items-center">
+                <a class="font-['Manrope'] font-medium text-[#44474e] hover:bg-[#f4f3f7] transition-colors px-3 py-1" href="/tutors.html">Discover Mentors</a>
+                <a class="font-['Manrope'] font-medium text-[#002147] border-b-2 border-[#cca830] px-3 py-1" href="/">Academic Success</a>
+                <div class="auth-area flex items-center gap-4">
+                    <!-- Populated by auth.js -->
+                </div>
+            </nav>
+            <button class="md:hidden material-symbols-outlined text-primary-container" id="mobile-menu-btn">menu</button>
+        </div>
+    </header>
+
+    <!-- Curator Bar -->
+    <div class="h-1 w-full bg-gradient-to-r from-tertiary-fixed-dim via-tertiary-container to-tertiary-fixed-dim"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="relative min-h-[751px] flex items-center overflow-hidden bg-primary dark:bg-primary-container py-24">
+            <div class="absolute inset-0 opacity-20 mix-blend-overlay">
+                <img class="w-full h-full object-cover" alt="Historic library" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXPu-MwluxERuIbYD7lUznIHMP0QqOxUdNiXuc3CedFpDmq_BL0WpztESJOFtNpoqvoR4MoY8jccit18gXrkTzqnG5JJR3aUrwvOqvXFXZ5uE2SraRHzceTA0l7yVM3YPp0srmT2WHOiMPFAi9GLQVFy0zFWOM-l2D7hPFUUwZkbeb1PARZdPC7PrOwJ7YNcCgsmaZcIy61lYheymdJx4V-ijy9Gt2veT_NvJ9ycdZU_HloUkuMoOHnhRk6sKZxnC4_AryQFK7-mI"/>
+            </div>
+            <div class="absolute inset-0 bg-gradient-to-br from-primary via-primary/95 to-transparent"></div>
+            <div class="relative container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+                    <div class="md:col-span-8">
+                        <span class="inline-block text-tertiary-fixed uppercase tracking-[0.3em] font-label text-sm mb-6">Institutional Excellence</span>
+                        <h1 class="text-6xl md:text-8xl text-white font-headline leading-[1.05] tracking-tight mb-8">
+                            Unleash Your <br/>
+                            <span class="italic text-tertiary-fixed-dim">Academic Potential</span>
+                        </h1>
+                        <p class="text-on-primary-container text-xl md:text-2xl max-w-2xl font-body mb-12 leading-relaxed">
+                            Lwazi Academy combines prestigious academic traditions with modern curated mentorship to elevate student performance beyond conventional limits.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-6">
+                            <a href="/tutors.html" class="bg-tertiary-container text-on-tertiary py-5 px-10 font-label font-bold text-sm tracking-widest uppercase hover:bg-tertiary transition-all duration-300 shadow-2xl shadow-black/20 text-center no-underline">
+                                Find Your Perfect Mentor
+                            </a>
+                            <a href="#impact" class="border border-white/20 text-white py-5 px-10 font-label font-bold text-sm tracking-widest uppercase hover:bg-white/5 transition-all text-center no-underline">
+                                View Academic Impact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Impact Statistics -->
+        <section id="impact" class="py-24 bg-surface-container-low">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+                    <div class="max-w-xl">
+                        <h2 class="text-4xl md:text-5xl font-headline text-primary-container mb-4">The Quantifiable Edge</h2>
+                        <p class="text-on-surface-variant font-body text-lg">Our methodology isn't just theory—it's proven through rigorous data tracking and student performance analytics.</p>
+                    </div>
+                    <div class="hidden md:block h-px bg-outline-variant/30 flex-grow mx-12 mb-4"></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-0.5 bg-outline-variant/20">
+                    <div class="bg-surface p-12 flex flex-col items-start transition-all hover:bg-surface-container-lowest group">
+                        <span class="text-6xl md:text-7xl font-headline font-semibold text-primary-container mb-4 group-hover:text-tertiary transition-colors">8.5%</span>
+                        <h3 class="text-xl font-label font-bold uppercase tracking-wider text-on-surface-variant mb-6">Average Grade Improvement</h3>
+                        <p class="text-on-surface-variant font-body leading-relaxed">The majority of our enrolled scholars report significant upward mobility in their primary subject GPA within two semesters.</p>
+                    </div>
+                    <div class="bg-surface p-12 flex flex-col items-start transition-all hover:bg-surface-container-lowest group">
+                        <span class="text-6xl md:text-7xl font-headline font-semibold text-primary-container mb-4 group-hover:text-tertiary transition-colors">200+</span>
+                        <h3 class="text-xl font-label font-bold uppercase tracking-wider text-on-surface-variant mb-6">Success Stories</h3>
+                        <p class="text-on-surface-variant font-body leading-relaxed mb-6">A growing alumni network of high-achieving individuals who have transitioned into world-class university environments.</p>
+                        <div class="mt-auto border-t border-outline-variant/30 pt-4 w-full">
+                            <p class="text-on-surface-variant font-body italic text-sm">"Lwazi completely shifted my approach to learning and helped me master difficult concepts."</p>
+                            <p class="text-primary-container font-label font-bold text-[10px] mt-2 uppercase tracking-widest">— Ntokozo Dlamini</p>
+                        </div>
+                    </div>
+                    <div class="bg-surface p-12 flex flex-col items-start transition-all hover:bg-surface-container-lowest group">
+                        <span class="text-6xl md:text-7xl font-headline font-semibold text-primary-container mb-4 group-hover:text-tertiary transition-colors">+12%</span>
+                        <h3 class="text-xl font-label font-bold uppercase tracking-wider text-on-surface-variant mb-6">NSC &amp; IEB Excellence</h3>
+                        <p class="text-on-surface-variant font-body leading-relaxed">Targeted National Senior Certificate achievement support focusing on distinction-rate logic and rigorous exam preparation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academic Metrics -->
+        <section class="py-24 bg-surface overflow-hidden">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+                    <div>
+                        <span class="text-tertiary font-label text-sm uppercase tracking-widest font-bold mb-4 block">Benchmark Analysis</span>
+                        <h2 class="text-4xl md:text-6xl font-headline text-primary-container mb-8 leading-tight">Outperforming the <span class="italic">South African National Average</span></h2>
+                        <div class="space-y-12 mt-12">
+                            <div class="relative">
+                                <div class="flex justify-between items-end mb-3">
+                                    <span class="text-lg font-headline font-medium text-primary-container">Maths and Science</span>
+                                    <span class="text-sm font-label font-bold text-tertiary">+15% vs National Avg</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-surface-container-high overflow-hidden"><div class="h-full bg-primary-container w-[75%]"></div></div>
+                            </div>
+                            <div class="relative">
+                                <div class="flex justify-between items-end mb-3">
+                                    <span class="text-lg font-headline font-medium text-primary-container">Languages (HL and FAL)</span>
+                                    <span class="text-sm font-label font-bold text-tertiary">+10% vs National Avg</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-surface-container-high overflow-hidden"><div class="h-full bg-primary-container w-[70%]"></div></div>
+                            </div>
+                            <div class="relative">
+                                <div class="flex justify-between items-end mb-3">
+                                    <span class="text-lg font-headline font-medium text-primary-container">Social Sciences</span>
+                                    <span class="text-sm font-label font-bold text-tertiary">+8% vs National Avg</span>
+                                </div>
+                                <div class="w-full h-1.5 bg-surface-container-high overflow-hidden"><div class="h-full bg-primary-container w-[65%]"></div></div>
+                            </div>
+                        </div>
+                        <div class="mt-16 p-8 bg-surface-container-low border-l-4 border-tertiary">
+                            <p class="font-body text-on-surface-variant italic leading-relaxed">
+                                "The metrics don't just show higher grades; they show deeper comprehension and an increased capacity for intellectual curiosity within the local context."
+                            </p>
+                            <p class="mt-4 font-label font-bold text-primary-container">— Ntokozo Dlamini</p>
+                        </div>
+                    </div>
+                    <div class="relative aspect-[4/5] bg-surface-container-high">
+                        <img class="w-full h-full object-cover" alt="Student writing formulas" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5-D6G896TzVWBNR-mBeT83YQrfKdOo-mqeHE9EuhDDT_toFSgWuZk0v0MZCoJmTnvy0aqSPiI2-jFzUMZzbFqWgeVlX7t6i0faTdtyXRovpTzPLXm1wRhP9FHyXcoR5QhZ29M0rpDITihFT6ZkR1x-m3xP3A65RKYxO9J6Rxu7_D7E0IYxUvhK9-3WOwbS0YXhmZL00RtoI8EJD4XPfCkRaWMrIT4hkJjohWAKQBMcMbEQdUQw2goPSDSuEql01TtCOukl5-cY3E"/>
+                        <div class="absolute -bottom-8 -left-8 bg-tertiary-container p-10 hidden md:block">
+                            <span class="material-symbols-outlined text-on-tertiary text-4xl mb-4">verified</span>
+                            <p class="text-on-tertiary font-headline text-2xl leading-tight">ISO-Certified <br/>Pedagogical Framework</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Success Stories -->
+        <section class="py-24 bg-primary-container text-white overflow-hidden">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="text-center mb-20">
+                    <h2 class="text-4xl md:text-5xl font-headline mb-4 italic text-tertiary-fixed-dim">Scholarly Narratives</h2>
+                    <p class="text-on-primary-container max-w-2xl mx-auto font-body">Personal journeys of transformation through the Lwazi Academy ecosystem.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+                    <div class="relative p-10 bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div>
+                                <h4 class="font-headline text-xl text-tertiary-fixed-dim">Bandile Mkhize</h4>
+                                <p class="font-label text-[10px] uppercase tracking-widest text-on-primary-container">Class of 2023</p>
+                            </div>
+                        </div>
+                        <p class="font-headline italic text-xl leading-relaxed text-white/90">
+                            "Lwazi didn't just teach me calculus; they taught me how to think logically under pressure. My confidence surged alongside my scores."
+                        </p>
+                    </div>
+                    <div class="relative p-10 bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div>
+                                <h4 class="font-headline text-xl text-tertiary-fixed-dim">Ella le Roux</h4>
+                                <p class="font-label text-[10px] uppercase tracking-widest text-on-primary-container">Humanities Scholar</p>
+                            </div>
+                        </div>
+                        <p class="font-headline italic text-xl leading-relaxed text-white/90">
+                            "The mentor pairing was perfect. My writing transitioned from standard academic work to something truly compelling and unique."
+                        </p>
+                    </div>
+                    <div class="relative p-10 bg-white/5 backdrop-blur-lg border border-white/10 hover:bg-white/10 transition-all duration-300">
+                        <div class="flex items-center gap-4 mb-8">
+                            <div>
+                                <h4 class="font-headline text-xl text-tertiary-fixed-dim">Marcus van der Merwe</h4>
+                                <p class="font-label text-[10px] uppercase tracking-widest text-on-primary-container">Academic Achievement Award</p>
+                            </div>
+                        </div>
+                        <p class="font-headline italic text-xl leading-relaxed text-white/90">
+                            "The results were transformative. The methodology is clinical, precise, and remarkably effective for high-stakes examinations."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA -->
+        <section class="py-32 bg-surface text-center">
+            <div class="container mx-auto px-6 max-w-4xl">
+                <span class="material-symbols-outlined text-6xl text-tertiary mb-8">auto_stories</span>
+                <h2 class="text-5xl md:text-7xl font-headline text-primary-container mb-8">Your Success Story Begins Here</h2>
+                <p class="text-on-surface-variant font-body text-xl mb-12 leading-relaxed">
+                    Step into an environment designed for the intellectual elite. Join Lwazi Academy and find the guidance your potential deserves.
+                </p>
+                <a href="/register.html" class="inline-block bg-primary-container text-white py-6 px-16 font-label font-bold text-sm tracking-[0.2em] uppercase hover:bg-primary transition-all shadow-xl shadow-primary/10 no-underline">
+                    Apply for Mentorship
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- BottomNavBar (Mobile Only) -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 pb-safe bg-[#faf9fd]/80 backdrop-blur-xl border-t border-outline-variant/20">
+        <a href="/tutors.html" class="flex flex-col items-center justify-center text-[#44474e] opacity-60 no-underline">
+            <span class="material-symbols-outlined">explore</span>
+            <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest">Explore</span>
+        </a>
+        <a href="/" class="flex flex-col items-center justify-center text-[#002147] font-black scale-110 no-underline">
+            <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">verified</span>
+            <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest">Success</span>
+        </a>
+        <a href="/dashboard.html" class="flex flex-col items-center justify-center text-[#44474e] opacity-60 no-underline">
+            <span class="material-symbols-outlined">dashboard</span>
+            <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest">Dashboard</span>
+        </a>
+        <a href="/login.html" class="flex flex-col items-center justify-center text-[#44474e] opacity-60 no-underline" id="mobile-account-link">
+            <span class="material-symbols-outlined">person</span>
+            <span class="font-['Manrope'] text-[10px] font-bold uppercase tracking-widest">Account</span>
+        </a>
+    </nav>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-high py-20 pb-32 md:pb-20 border-t border-outline-variant/10">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-[#002147]">school</span>
+                        <span class="text-2xl font-semibold text-[#002147] font-['Newsreader']">Lwazi Academy</span>
+                    </div>
+                    <p class="text-on-surface-variant max-w-xs font-body leading-relaxed">
+                        Redefining academic excellence through the intersection of traditional prestige and modern data-driven mentorship.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-label font-bold text-xs uppercase tracking-widest text-primary-container mb-6">Ecosystem</h5>
+                    <ul class="space-y-4 font-body text-sm text-on-surface-variant list-none p-0">
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/tutors.html">Global Mentors</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Success Framework</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/register.html">Scholarship Program</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-label font-bold text-xs uppercase tracking-widest text-primary-container mb-6">Legal</h5>
+                    <ul class="space-y-4 font-body text-sm text-on-surface-variant list-none p-0">
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Privacy Charter</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Terms of Excellence</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Contact Registrar</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between gap-4">
+                <p class="text-label text-xs text-on-surface-variant/60">© 2024 Lwazi Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+</body>
+</html>
