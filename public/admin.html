@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Admin — Tutor Applications | Lwazi Academy</title>
+    <meta name="description" content="Review and manage tutor applications for Lwazi Academy."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/shared.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant":"#c4c6cf","tertiary":"#735c00","surface-container-low":"#f4f3f7",
+                        "on-tertiary":"#ffffff","tertiary-container":"#cca830","outline":"#74777f",
+                        "on-primary":"#ffffff","surface-container-high":"#e9e7eb","primary-container":"#002147",
+                        "error":"#ba1a1a","on-surface-variant":"#44474e","on-surface":"#1a1b1e",
+                        "primary":"#000a1e","surface":"#faf9fd","surface-container":"#efedf1",
+                        "surface-container-lowest":"#ffffff","error-container":"#ffdad6",
+                        "tertiary-fixed-dim":"#e9c349","on-primary-container":"#708ab5",
+                        "tertiary-fixed":"#ffe088","on-tertiary-container":"#4f3e00"
+                    },
+                    fontFamily: { headline: ["Newsreader"], body: ["Manrope"], label: ["Manrope"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+
+        /* Application card expand/collapse */
+        .app-details {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+        }
+        .app-details.expanded {
+            max-height: 800px;
+            padding-top: 20px;
+        }
+
+        /* Status pill styles */
+        .status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border-radius: 2px;
+        }
+        .status-pill.pending { background: #fff3e0; color: #e65100; }
+        .status-pill.reviewed { background: #e3f2fd; color: #1565c0; }
+        .status-pill.approved { background: #e8f5e9; color: #2e7d32; }
+        .status-pill.rejected { background: #ffdad6; color: #ba1a1a; }
+
+        /* Action buttons */
+        .action-btn {
+            padding: 8px 16px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .action-btn:hover { transform: translateY(-1px); }
+        .action-btn.approve { background: #e8f5e9; color: #2e7d32; }
+        .action-btn.approve:hover { background: #c8e6c9; }
+        .action-btn.reject { background: #ffdad6; color: #ba1a1a; }
+        .action-btn.reject:hover { background: #ffcdd2; }
+        .action-btn.review { background: #e3f2fd; color: #1565c0; }
+        .action-btn.review:hover { background: #bbdefb; }
+        .action-btn.delete { background: transparent; color: #ba1a1a; border: 1px solid #ffdad6; }
+        .action-btn.delete:hover { background: #ffdad6; }
+
+        /* Filter tabs */
+        .filter-tab {
+            padding: 10px 20px;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            background: none;
+            border: none;
+            color: var(--on-surface-variant);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+        .filter-tab:hover { color: var(--primary-container); }
+        .filter-tab.active {
+            color: var(--primary-container);
+            border-bottom-color: var(--tertiary-container);
+        }
+
+        /* Stat card pulse for pending */
+        @keyframes subtlePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(230, 81, 0, 0); }
+            50% { box-shadow: 0 0 0 4px rgba(230, 81, 0, 0.08); }
+        }
+        .stat-card.has-pending { animation: subtlePulse 3s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-surface-container-low text-on-surface">
+    <!-- Header -->
+    <header class="bg-surface sticky top-0 z-50 border-b border-outline-variant/10">
+        <div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+            <a href="/" class="flex items-center gap-3 no-underline">
+                <span class="material-symbols-outlined text-primary-container">school</span>
+                <span class="text-2xl font-semibold text-primary-container font-headline tracking-tight">Lwazi Academy</span>
+            </a>
+            <nav class="hidden md:flex gap-8 items-center">
+                <a class="font-body font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-1 no-underline" href="/tutors.html">Discover Mentors</a>
+                <a class="font-body font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-1 no-underline" href="/">Academic Success</a>
+                <a class="font-body font-medium text-primary-container border-b-2 border-tertiary-container px-3 py-1 no-underline" href="/admin.html">
+                    <span class="material-symbols-outlined text-base align-middle mr-1">admin_panel_settings</span>
+                    Admin
+                </a>
+                <div class="auth-area flex items-center gap-4"></div>
+            </nav>
+        </div>
+    </header>
+    <div class="h-1 w-full bg-gradient-to-r from-tertiary-fixed-dim via-tertiary-container to-tertiary-fixed-dim"></div>
+
+    <main class="page-container">
+        <div class="container mx-auto px-6 max-w-7xl py-10">
+            <!-- Page Header -->
+            <div class="bg-primary-container p-8 md:p-10 mb-8">
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                    <div>
+                        <p class="font-label text-xs uppercase tracking-widest text-tertiary-fixed-dim mb-2">Administration</p>
+                        <h1 class="text-3xl md:text-4xl font-headline text-white mb-2">Tutor Applications</h1>
+                        <p class="text-on-primary-container font-body text-sm">Review, approve, or reject incoming tutor applications.</p>
+                    </div>
+                    <a href="/apply-tutor.html" class="lwazi-btn-gold text-xs no-underline flex-shrink-0">
+                        <span class="material-symbols-outlined text-lg">open_in_new</span>
+                        View Application Form
+                    </a>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8" id="stats-grid">
+                <div class="bg-surface p-6 border border-outline-variant/20 stat-card" id="stat-total-card">
+                    <span class="material-symbols-outlined text-tertiary-container text-3xl mb-2">description</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-total">—</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Total</p>
+                </div>
+                <div class="bg-surface p-6 border border-outline-variant/20 stat-card" id="stat-pending-card">
+                    <span class="material-symbols-outlined text-[#e65100] text-3xl mb-2">schedule</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-pending">—</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Pending</p>
+                </div>
+                <div class="bg-surface p-6 border border-outline-variant/20 stat-card">
+                    <span class="material-symbols-outlined text-[#2e7d32] text-3xl mb-2">check_circle</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-approved">—</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Approved</p>
+                </div>
+                <div class="bg-surface p-6 border border-outline-variant/20 stat-card">
+                    <span class="material-symbols-outlined text-[#ba1a1a] text-3xl mb-2">cancel</span>
+                    <p class="text-3xl font-headline font-semibold text-primary-container" id="stat-rejected">—</p>
+                    <p class="font-label text-xs uppercase tracking-widest text-on-surface-variant mt-1">Rejected</p>
+                </div>
+            </div>
+
+            <!-- Alert Container -->
+            <div id="alert-container"></div>
+
+            <!-- Filter Tabs + Applications List -->
+            <div class="bg-surface border border-outline-variant/20">
+                <div class="flex border-b border-outline-variant/20 overflow-x-auto">
+                    <button class="filter-tab active" data-status="" id="filter-all">All</button>
+                    <button class="filter-tab" data-status="pending" id="filter-pending">Pending</button>
+                    <button class="filter-tab" data-status="reviewed" id="filter-reviewed">Reviewed</button>
+                    <button class="filter-tab" data-status="approved" id="filter-approved">Approved</button>
+                    <button class="filter-tab" data-status="rejected" id="filter-rejected">Rejected</button>
+                </div>
+
+                <div id="applications-list" class="p-6">
+                    <!-- Loading -->
+                    <div class="flex justify-center py-16">
+                        <div class="lwazi-spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Detail Modal -->
+    <div id="detail-modal" class="lwazi-modal-overlay hidden">
+        <div class="lwazi-modal" style="max-width: 640px;">
+            <div class="lwazi-modal-header">
+                <h2 class="font-headline text-2xl text-primary-container">Application Details</h2>
+                <button class="lwazi-modal-close" onclick="closeDetailModal()">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+            <div class="lwazi-modal-body" id="detail-modal-body">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/admin.js"></script>
+</body>
+</html>

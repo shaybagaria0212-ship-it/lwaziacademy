@@ -74,4 +74,104 @@ router.post('/', (req, res) => {
     }
 });
 
+// GET /api/applications — List all applications (admin)
+router.get('/', (req, res) => {
+    try {
+        const db = getDb();
+        const { status } = req.query;
+
+        let query = 'SELECT * FROM tutor_applications';
+        let params = [];
+
+        if (status && ['pending', 'reviewed', 'approved', 'rejected'].includes(status)) {
+            query += ' WHERE status = ?';
+            params.push(status);
+        }
+
+        query += ' ORDER BY created_at DESC';
+
+        const applications = db.prepare(query).all(...params);
+
+        // Parse comma-separated fields back into arrays
+        const parsed = applications.map(app => ({
+            ...app,
+            subjects: app.subjects ? app.subjects.split(',') : [],
+            grade_levels: app.grade_levels ? app.grade_levels.split(',') : []
+        }));
+
+        res.json({
+            applications: parsed,
+            total: parsed.length
+        });
+    } catch (err) {
+        console.error('List applications error:', err);
+        res.status(500).json({ error: 'Failed to fetch applications.' });
+    }
+});
+
+// GET /api/applications/stats — Summary counts
+router.get('/stats', (req, res) => {
+    try {
+        const db = getDb();
+        const total = db.prepare('SELECT COUNT(*) as count FROM tutor_applications').get().count;
+        const pending = db.prepare("SELECT COUNT(*) as count FROM tutor_applications WHERE status = 'pending'").get().count;
+        const approved = db.prepare("SELECT COUNT(*) as count FROM tutor_applications WHERE status = 'approved'").get().count;
+        const rejected = db.prepare("SELECT COUNT(*) as count FROM tutor_applications WHERE status = 'rejected'").get().count;
+        const reviewed = db.prepare("SELECT COUNT(*) as count FROM tutor_applications WHERE status = 'reviewed'").get().count;
+
+        res.json({ total, pending, approved, rejected, reviewed });
+    } catch (err) {
+        console.error('Application stats error:', err);
+        res.status(500).json({ error: 'Failed to fetch stats.' });
+    }
+});
+
+// PATCH /api/applications/:id — Update application status
+router.patch('/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+        const { status } = req.body;
+
+        if (!status || !['pending', 'reviewed', 'approved', 'rejected'].includes(status)) {
+            return res.status(400).json({ error: 'Invalid status. Must be: pending, reviewed, approved, or rejected.' });
+        }
+
+        const db = getDb();
+
+        const app = db.prepare('SELECT * FROM tutor_applications WHERE id = ?').get(id);
+        if (!app) {
+            return res.status(404).json({ error: 'Application not found.' });
+        }
+
+        db.prepare('UPDATE tutor_applications SET status = ? WHERE id = ?').run(status, id);
+
+        res.json({
+            message: `Application status updated to "${status}".`,
+            application: { ...app, status }
+        });
+    } catch (err) {
+        console.error('Update application error:', err);
+        res.status(500).json({ error: 'Failed to update application.' });
+    }
+});
+
+// DELETE /api/applications/:id — Delete an application
+router.delete('/:id', (req, res) => {
+    try {
+        const { id } = req.params;
+        const db = getDb();
+
+        const app = db.prepare('SELECT id FROM tutor_applications WHERE id = ?').get(id);
+        if (!app) {
+            return res.status(404).json({ error: 'Application not found.' });
+        }
+
+        db.prepare('DELETE FROM tutor_applications WHERE id = ?').run(id);
+        res.json({ message: 'Application deleted.' });
+    } catch (err) {
+        console.error('Delete application error:', err);
+        res.status(500).json({ error: 'Failed to delete application.' });
+    }
+});
+
 module.exports = router;
