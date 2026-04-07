@@ -22,6 +22,7 @@ app.use('/api/tutors', require('./routes/tutors'));
 app.use('/api/sessions', require('./routes/sessions'));
 app.use('/api/profile', require('./routes/profile'));
 app.use('/api/reviews', require('./routes/reviews'));
+app.use('/api/applications', require('./routes/applications'));
 
 // Health check
 app.get('/api/health', (req, res) => {

@@ -3,6 +3,8 @@ node_modules/
 
 # Database
 server/db/*.db
+server/db/*.db-shm
+server/db/*.db-wal
 
 # Environment
 .env

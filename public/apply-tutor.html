@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Become a Tutor | Lwazi Academy</title>
+    <meta name="description" content="Apply to become a tutor at Lwazi Academy. Share your expertise with South African students and make a meaningful impact on their academic journey."/>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/css/shared.css" rel="stylesheet"/>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        "outline-variant":"#c4c6cf","tertiary":"#735c00","surface-container-low":"#f4f3f7",
+                        "on-tertiary":"#ffffff","tertiary-container":"#cca830","outline":"#74777f",
+                        "on-primary":"#ffffff","surface-container-high":"#e9e7eb","primary-container":"#002147",
+                        "error":"#ba1a1a","on-surface-variant":"#44474e","on-surface":"#1a1b1e",
+                        "primary":"#000a1e","surface":"#faf9fd","surface-container":"#efedf1",
+                        "surface-container-lowest":"#ffffff","error-container":"#ffdad6",
+                        "tertiary-fixed-dim":"#e9c349","on-primary-container":"#708ab5",
+                        "tertiary-fixed":"#ffe088","on-tertiary-container":"#4f3e00"
+                    },
+                    fontFamily: { headline: ["Newsreader"], body: ["Manrope"], label: ["Manrope"] }
+                },
+            },
+        }
+    </script>
+    <style>
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        body { font-family: 'Manrope', sans-serif; }
+        h1, h2, h3 { font-family: 'Newsreader', serif; }
+
+        /* Step indicator */
+        .step-indicator {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 2rem;
+        }
+        .step-dot {
+            height: 4px;
+            flex: 1;
+            background: var(--outline-variant);
+            transition: background 0.4s ease;
+        }
+        .step-dot.active {
+            background: var(--tertiary-container);
+        }
+        .step-dot.completed {
+            background: var(--primary-container);
+        }
+
+        /* Form step transitions */
+        .form-step {
+            display: none;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        .form-step.active {
+            display: block;
+        }
+
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Success state */
+        .success-state {
+            display: none;
+            animation: scaleIn 0.5s ease;
+        }
+        .success-state.active {
+            display: block;
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Perks grid */
+        .perk-item {
+            padding: 20px;
+            border: 1px solid var(--outline-variant);
+            transition: all 0.3s ease;
+        }
+        .perk-item:hover {
+            border-color: var(--tertiary-container);
+            background: rgba(204, 168, 48, 0.03);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+    <!-- Header -->
+    <header class="bg-surface sticky top-0 z-50 border-b border-outline-variant/10">
+        <div class="flex justify-between items-center w-full px-6 py-4 max-w-7xl mx-auto">
+            <a href="/" class="flex items-center gap-3 no-underline">
+                <span class="material-symbols-outlined text-primary-container">school</span>
+                <span class="text-2xl font-semibold text-primary-container font-headline tracking-tight">Lwazi Academy</span>
+            </a>
+            <nav class="hidden md:flex gap-8 items-center">
+                <a class="font-body font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-1 no-underline" href="/tutors.html">Discover Mentors</a>
+                <a class="font-body font-medium text-on-surface-variant hover:bg-surface-container-low transition-colors px-3 py-1 no-underline" href="/">Academic Success</a>
+                <div class="auth-area flex items-center gap-4"></div>
+            </nav>
+        </div>
+    </header>
+    <div class="h-1 w-full bg-gradient-to-r from-tertiary-fixed-dim via-tertiary-container to-tertiary-fixed-dim"></div>
+
+    <main class="page-container">
+        <!-- Hero Banner -->
+        <section class="bg-primary-container py-16 md:py-20 relative overflow-hidden">
+            <div class="absolute inset-0 opacity-10">
+                <div class="absolute top-0 right-0 w-96 h-96 bg-tertiary-container rounded-full blur-[128px]"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-tertiary-fixed rounded-full blur-[96px]"></div>
+            </div>
+            <div class="container mx-auto px-6 max-w-7xl relative">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="material-symbols-outlined text-tertiary-fixed-dim text-3xl">workspace_premium</span>
+                    <span class="text-tertiary-fixed-dim font-label text-sm uppercase tracking-widest font-bold">Join Our Network</span>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-headline text-white mb-4">Become a <span class="italic text-tertiary-fixed-dim">Lwazi Mentor</span></h1>
+                <p class="text-on-primary-container font-body text-lg max-w-2xl">Share your expertise, shape futures, and earn on your own terms. Join a curated network of South Africa's top educators.</p>
+            </div>
+        </section>
+
+        <!-- Why Join -->
+        <section class="py-16 bg-surface-container-low">
+            <div class="container mx-auto px-6 max-w-7xl">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                    <div class="perk-item">
+                        <span class="material-symbols-outlined text-tertiary-container text-3xl mb-3">payments</span>
+                        <h3 class="font-headline text-lg text-primary-container mb-1">Set Your Rate</h3>
+                        <p class="text-on-surface-variant text-sm font-body">Choose your hourly rate and earn what you deserve.</p>
+                    </div>
+                    <div class="perk-item">
+                        <span class="material-symbols-outlined text-tertiary-container text-3xl mb-3">schedule</span>
+                        <h3 class="font-headline text-lg text-primary-container mb-1">Flexible Hours</h3>
+                        <p class="text-on-surface-variant text-sm font-body">Teach when it suits you — mornings, evenings, or weekends.</p>
+                    </div>
+                    <div class="perk-item">
+                        <span class="material-symbols-outlined text-tertiary-container text-3xl mb-3">group</span>
+                        <h3 class="font-headline text-lg text-primary-container mb-1">Growing Network</h3>
+                        <p class="text-on-surface-variant text-sm font-body">Connect with students across South Africa who need your help.</p>
+                    </div>
+                    <div class="perk-item">
+                        <span class="material-symbols-outlined text-tertiary-container text-3xl mb-3">verified</span>
+                        <h3 class="font-headline text-lg text-primary-container mb-1">Verified Badge</h3>
+                        <p class="text-on-surface-variant text-sm font-body">Stand out with a verified profile that builds trust and credibility.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Form -->
+        <section class="py-16 md:py-24">
+            <div class="max-w-2xl mx-auto px-6">
+                <!-- Application Form Container -->
+                <div id="application-form-container">
+                    <div class="text-center mb-10">
+                        <span class="material-symbols-outlined text-5xl text-tertiary-container mb-4">edit_note</span>
+                        <h2 class="text-3xl md:text-4xl font-headline text-primary-container mb-3">Tutor Application</h2>
+                        <p class="text-on-surface-variant font-body">Tell us about yourself so we can match you with the right students.</p>
+                    </div>
+
+                    <!-- Step Indicator -->
+                    <div class="step-indicator" id="step-indicator">
+                        <div class="step-dot active" data-step="1"></div>
+                        <div class="step-dot" data-step="2"></div>
+                        <div class="step-dot" data-step="3"></div>
+                    </div>
+
+                    <!-- Alert Container -->
+                    <div id="alert-container"></div>
+
+                    <form id="tutor-application-form">
+                        <!-- Step 1: Personal Details -->
+                        <div class="form-step active" id="step-1">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-8 h-8 bg-primary-container text-white flex items-center justify-center font-label font-bold text-sm">1</div>
+                                <h3 class="font-headline text-xl text-primary-container">Personal Information</h3>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="lwazi-label" for="apply-name">Full Name *</label>
+                                    <input class="lwazi-input" type="text" id="apply-name" name="full_name" placeholder="Enter your full name" required/>
+                                </div>
+
+                                <div>
+                                    <label class="lwazi-label" for="apply-email">Email Address *</label>
+                                    <input class="lwazi-input" type="email" id="apply-email" name="email" placeholder="your@email.com" required/>
+                                </div>
+
+                                <div>
+                                    <label class="lwazi-label" for="apply-phone">Phone Number</label>
+                                    <input class="lwazi-input" type="tel" id="apply-phone" name="phone" placeholder="e.g. 072 123 4567"/>
+                                </div>
+
+                                <div>
+                                    <label class="lwazi-label" for="apply-qualification">Highest Qualification *</label>
+                                    <input class="lwazi-input" type="text" id="apply-qualification" name="qualification" placeholder="e.g. BSc Mathematics — Wits University" required/>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end mt-8">
+                                <button type="button" class="lwazi-btn-primary" onclick="goToStep(2)" id="step1-next-btn">
+                                    Next: Teaching Details
+                                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Teaching Details -->
+                        <div class="form-step" id="step-2">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-8 h-8 bg-primary-container text-white flex items-center justify-center font-label font-bold text-sm">2</div>
+                                <h3 class="font-headline text-xl text-primary-container">Teaching Details</h3>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="lwazi-label">Subjects You Can Teach *</label>
+                                    <div class="checkbox-grid" id="apply-subjects-grid">
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Mathematics"/> Mathematics</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Physical Sciences"/> Physical Sciences</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Life Sciences"/> Life Sciences</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Accounting"/> Accounting</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Business Studies"/> Business Studies</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Economics"/> Economics</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="English Home Language"/> English HL</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="English First Additional Language"/> English FAL</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Afrikaans"/> Afrikaans</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="History"/> History</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Geography"/> Geography</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="subjects" value="Information Technology"/> Information Technology</label>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="lwazi-label">Grade Levels *</label>
+                                    <div class="checkbox-grid" id="apply-grades-grid">
+                                        <label class="checkbox-item"><input type="checkbox" name="grade_levels" value="8"/> Grade 8</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="grade_levels" value="9"/> Grade 9</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="grade_levels" value="10"/> Grade 10</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="grade_levels" value="11"/> Grade 11</label>
+                                        <label class="checkbox-item"><input type="checkbox" name="grade_levels" value="12"/> Grade 12</label>
+                                    </div>
+                                </div>
+
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                    <div>
+                                        <label class="lwazi-label" for="apply-experience">Years of Experience</label>
+                                        <input class="lwazi-input" type="number" id="apply-experience" name="experience_years" placeholder="e.g. 5" min="0"/>
+                                    </div>
+                                    <div>
+                                        <label class="lwazi-label" for="apply-rate">Desired Hourly Rate (ZAR)</label>
+                                        <input class="lwazi-input" type="number" id="apply-rate" name="hourly_rate" placeholder="e.g. 250" min="0" step="10"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between mt-8">
+                                <button type="button" class="lwazi-btn-secondary" onclick="goToStep(1)">
+                                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                                    Back
+                                </button>
+                                <button type="button" class="lwazi-btn-primary" onclick="goToStep(3)" id="step2-next-btn">
+                                    Next: Motivation
+                                    <span class="material-symbols-outlined text-lg">arrow_forward</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Motivation -->
+                        <div class="form-step" id="step-3">
+                            <div class="flex items-center gap-3 mb-6">
+                                <div class="w-8 h-8 bg-primary-container text-white flex items-center justify-center font-label font-bold text-sm">3</div>
+                                <h3 class="font-headline text-xl text-primary-container">Your Motivation</h3>
+                            </div>
+
+                            <div class="space-y-6">
+                                <div>
+                                    <label class="lwazi-label" for="apply-motivation">Why do you want to tutor with Lwazi Academy?</label>
+                                    <textarea class="lwazi-textarea" id="apply-motivation" name="motivation" placeholder="Tell us about your passion for teaching, your approach to mentoring students, and what makes you a great tutor..." rows="6"></textarea>
+                                </div>
+
+                                <div class="bg-surface-container-low p-6 border-l-4 border-tertiary-container">
+                                    <div class="flex items-start gap-3">
+                                        <span class="material-symbols-outlined text-tertiary-container mt-0.5">info</span>
+                                        <div>
+                                            <p class="font-label font-bold text-sm uppercase tracking-wider text-on-surface-variant mb-1">What Happens Next?</p>
+                                            <p class="text-on-surface-variant text-sm font-body leading-relaxed">After submitting, our team will review your application within 2–3 business days. If approved, we'll send you an invite to create your full tutor profile and start accepting students.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between mt-8">
+                                <button type="button" class="lwazi-btn-secondary" onclick="goToStep(2)">
+                                    <span class="material-symbols-outlined text-lg">arrow_back</span>
+                                    Back
+                                </button>
+                                <button type="submit" class="lwazi-btn-gold" id="submit-application-btn">
+                                    <span class="material-symbols-outlined text-lg">send</span>
+                                    Submit Application
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Success State -->
+                <div class="success-state" id="success-state">
+                    <div class="text-center py-12">
+                        <div class="w-20 h-20 bg-tertiary-container/10 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <span class="material-symbols-outlined text-tertiary-container text-5xl" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-headline text-primary-container mb-4">Application Submitted!</h2>
+                        <p class="text-on-surface-variant font-body text-lg max-w-md mx-auto mb-8 leading-relaxed">
+                            Thank you for your interest in joining Lwazi Academy. Our team will review your application and get back to you within 2–3 business days.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="/" class="lwazi-btn-primary no-underline">
+                                <span class="material-symbols-outlined text-lg">home</span>
+                                Back to Home
+                            </a>
+                            <a href="/tutors.html" class="lwazi-btn-secondary no-underline">
+                                <span class="material-symbols-outlined text-lg">explore</span>
+                                Browse Mentors
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-high py-20 border-t border-outline-variant/10">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-primary-container">school</span>
+                        <span class="text-2xl font-semibold text-primary-container font-headline">Lwazi Academy</span>
+                    </div>
+                    <p class="text-on-surface-variant max-w-xs font-body leading-relaxed">
+                        Redefining academic excellence through the intersection of traditional prestige and modern data-driven mentorship.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-label font-bold text-xs uppercase tracking-widest text-primary-container mb-6">Ecosystem</h5>
+                    <ul class="space-y-4 font-body text-sm text-on-surface-variant list-none p-0">
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/tutors.html">Global Mentors</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Success Framework</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/apply-tutor.html">Become a Tutor</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-label font-bold text-xs uppercase tracking-widest text-primary-container mb-6">Legal</h5>
+                    <ul class="space-y-4 font-body text-sm text-on-surface-variant list-none p-0">
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Privacy Charter</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Terms of Excellence</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Contact Registrar</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between gap-4">
+                <p class="text-label text-xs text-on-surface-variant/60">© 2024 Lwazi Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/apply-tutor.js"></script>
+</body>
+</html>

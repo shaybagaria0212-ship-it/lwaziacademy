@@ -54,8 +54,26 @@ CREATE TABLE IF NOT EXISTS reviews (
     FOREIGN KEY (tutor_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
+-- Tutor Applications (for "Become a Tutor" flow)
+CREATE TABLE IF NOT EXISTS tutor_applications (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    full_name TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phone TEXT DEFAULT '',
+    subjects TEXT NOT NULL,
+    grade_levels TEXT NOT NULL,
+    qualification TEXT NOT NULL,
+    experience_years INTEGER DEFAULT 0,
+    hourly_rate REAL DEFAULT 0,
+    motivation TEXT DEFAULT '',
+    status TEXT DEFAULT 'pending' CHECK(status IN ('pending', 'reviewed', 'approved', 'rejected')),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Indexes for performance
 CREATE INDEX IF NOT EXISTS idx_tutor_profiles_user_id ON tutor_profiles(user_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_student_id ON sessions(student_id);
 CREATE INDEX IF NOT EXISTS idx_sessions_tutor_id ON sessions(tutor_id);
 CREATE INDEX IF NOT EXISTS idx_reviews_tutor_id ON reviews(tutor_id);
+CREATE INDEX IF NOT EXISTS idx_tutor_applications_email ON tutor_applications(email);
+CREATE INDEX IF NOT EXISTS idx_tutor_applications_status ON tutor_applications(status);
