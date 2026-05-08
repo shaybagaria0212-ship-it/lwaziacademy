@@ -144,34 +144,44 @@ function initFormSubmission() {
         await new Promise(resolve => setTimeout(resolve, 800));
 
         try {
-            const response = await fetch("https://formsubmit.co/ajax/shaybagaria0212@gmail.com", {
-                method: "POST",
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify({
-                    _subject: "New Tutor Application - Lwazi Academy",
-                    ...payload,
-                    subjects: payload.subjects.join(", "),
-                    grade_levels: payload.grade_levels.join(", ")
-                })
-            });
-            
-            if (response.ok) {
-                // Keep local storage submission for local testing/history
-                ApplicationsStore.submit(payload);
-                
-                // Show success state
-                document.getElementById('application-form-container').style.display = 'none';
-                const successState = document.getElementById('success-state');
-                successState.classList.add('active');
-                successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            } else {
-                throw new Error("Submission failed");
+            // First, process the local save
+            const result = ApplicationsStore.submit(payload);
+            if (!result.success) {
+                // If it fails locally (like "You already have a pending application"), we show error and stop
+                throw new Error(result.error);
             }
+
+            // Prepare data for FormSubmit
+            const formData = new URLSearchParams();
+            formData.append("_subject", "New Tutor Application - Lwazi Academy");
+            formData.append("_template", "table"); // Makes the email look nice
+            
+            for (const key in payload) {
+                if (Array.isArray(payload[key])) {
+                    formData.append(key, payload[key].join(", "));
+                } else {
+                    formData.append(key, payload[key]);
+                }
+            }
+
+            // Send silently using no-cors to prevent browser blocking it
+            await fetch("https://formsubmit.co/shaybagaria0212@gmail.com", {
+                method: "POST",
+                mode: "no-cors",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: formData.toString()
+            });
+
+            // Show success state
+            document.getElementById('application-form-container').style.display = 'none';
+            const successState = document.getElementById('success-state');
+            successState.classList.add('active');
+            successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
         } catch (error) {
-            showAlert(alertContainer, "Failed to submit application. Please try again later.", 'error');
+            showAlert(alertContainer, error.message || "Failed to submit application. Please try again.", 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = `
                 <span class="material-symbols-outlined text-lg">send</span>
