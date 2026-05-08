@@ -143,16 +143,35 @@ function initFormSubmission() {
         // Small delay to feel natural
         await new Promise(resolve => setTimeout(resolve, 800));
 
-        const result = ApplicationsStore.submit(payload);
-
-        if (result.success) {
-            // Show success state
-            document.getElementById('application-form-container').style.display = 'none';
-            const successState = document.getElementById('success-state');
-            successState.classList.add('active');
-            successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        } else {
-            showAlert(alertContainer, result.error, 'error');
+        try {
+            const response = await fetch("https://formsubmit.co/ajax/shaybagaria0212@gmail.com", {
+                method: "POST",
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    _subject: "New Tutor Application - Lwazi Academy",
+                    ...payload,
+                    subjects: payload.subjects.join(", "),
+                    grade_levels: payload.grade_levels.join(", ")
+                })
+            });
+            
+            if (response.ok) {
+                // Keep local storage submission for local testing/history
+                ApplicationsStore.submit(payload);
+                
+                // Show success state
+                document.getElementById('application-form-container').style.display = 'none';
+                const successState = document.getElementById('success-state');
+                successState.classList.add('active');
+                successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                throw new Error("Submission failed");
+            }
+        } catch (error) {
+            showAlert(alertContainer, "Failed to submit application. Please try again later.", 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = `
                 <span class="material-symbols-outlined text-lg">send</span>
