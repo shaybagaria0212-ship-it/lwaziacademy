@@ -1,6 +1,8 @@
 // Lwazi Academy — Tutor Application Form Logic
+// Uses client-side ApplicationsStore (localStorage) for Vercel static deployment.
 
 document.addEventListener('DOMContentLoaded', () => {
+    ApplicationsStore.init();
     initCheckboxToggles();
     initFormSubmission();
 });
@@ -51,14 +53,17 @@ function validateStep(step) {
 
         if (!name) {
             showAlert(alertContainer, 'Please enter your full name.', 'error');
+            document.getElementById('apply-name').focus();
             return false;
         }
         if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
             showAlert(alertContainer, 'Please enter a valid email address.', 'error');
+            document.getElementById('apply-email').focus();
             return false;
         }
         if (!qualification) {
             showAlert(alertContainer, 'Please enter your highest qualification.', 'error');
+            document.getElementById('apply-qualification').focus();
             return false;
         }
         return true;
@@ -135,27 +140,19 @@ function initFormSubmission() {
             Submitting...
         `;
 
-        try {
-            const res = await fetch('/api/applications', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
+        // Small delay to feel natural
+        await new Promise(resolve => setTimeout(resolve, 800));
 
-            const data = await res.json();
+        const result = ApplicationsStore.submit(payload);
 
-            if (!res.ok) {
-                throw new Error(data.error || 'Something went wrong.');
-            }
-
+        if (result.success) {
             // Show success state
             document.getElementById('application-form-container').style.display = 'none';
             const successState = document.getElementById('success-state');
             successState.classList.add('active');
             successState.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        } catch (err) {
-            showAlert(alertContainer, err.message, 'error');
+        } else {
+            showAlert(alertContainer, result.error, 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = `
                 <span class="material-symbols-outlined text-lg">send</span>

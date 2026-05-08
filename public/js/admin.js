@@ -1,6 +1,8 @@
 // Lwazi Academy — Admin Applications Dashboard
+// Uses client-side ApplicationsStore (localStorage) for Vercel static deployment.
 
 document.addEventListener('DOMContentLoaded', () => {
+    ApplicationsStore.init();
     loadStats();
     loadApplications();
     initFilterTabs();
@@ -10,47 +12,48 @@ let currentFilter = '';
 let allApplications = [];
 
 // ===== Load Stats =====
-async function loadStats() {
-    try {
-        const res = await fetch('/api/applications/stats');
-        const data = await res.json();
+function loadStats() {
+    const stats = ApplicationsStore.getStats();
 
-        document.getElementById('stat-total').textContent = data.total;
-        document.getElementById('stat-pending').textContent = data.pending;
-        document.getElementById('stat-approved').textContent = data.approved;
-        document.getElementById('stat-rejected').textContent = data.rejected;
+    animateCount('stat-total', stats.total);
+    animateCount('stat-pending', stats.pending);
+    animateCount('stat-approved', stats.approved);
+    animateCount('stat-rejected', stats.rejected);
 
-        // Pulse animation if pending > 0
-        if (data.pending > 0) {
-            document.getElementById('stat-pending-card').classList.add('has-pending');
-        }
-    } catch (err) {
-        console.error('Failed to load stats:', err);
+    // Pulse animation if pending > 0
+    const pendingCard = document.getElementById('stat-pending-card');
+    if (stats.pending > 0) {
+        pendingCard.classList.add('has-pending');
+    } else {
+        pendingCard.classList.remove('has-pending');
     }
 }
 
-// ===== Load Applications =====
-async function loadApplications(status = '') {
-    const container = document.getElementById('applications-list');
-    container.innerHTML = '<div class="flex justify-center py-16"><div class="lwazi-spinner"></div></div>';
+/** Animate a stat number counting up */
+function animateCount(elementId, target) {
+    const el = document.getElementById(elementId);
+    if (!el) return;
+    const duration = 500;
+    const start = parseInt(el.textContent) || 0;
+    if (start === target) { el.textContent = target; return; }
+    const startTime = performance.now();
 
-    try {
-        const url = status ? `/api/applications?status=${status}` : '/api/applications';
-        const res = await fetch(url);
-        const data = await res.json();
-
-        allApplications = data.applications;
-        renderApplications(allApplications);
-    } catch (err) {
-        console.error('Failed to load applications:', err);
-        container.innerHTML = `
-            <div class="lwazi-empty">
-                <span class="material-symbols-outlined">error</span>
-                <h3>Failed to Load</h3>
-                <p>Could not fetch applications. Is the server running?</p>
-            </div>
-        `;
+    function step(now) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+        el.textContent = Math.round(start + (target - start) * eased);
+        if (progress < 1) requestAnimationFrame(step);
     }
+    requestAnimationFrame(step);
+}
+
+// ===== Load Applications =====
+function loadApplications(status = '') {
+    const container = document.getElementById('applications-list');
+
+    allApplications = ApplicationsStore.getAll(status || undefined);
+    renderApplications(allApplications);
 }
 
 // ===== Render Applications =====
@@ -69,9 +72,9 @@ function renderApplications(applications) {
     }
 
     container.innerHTML = applications.map(app => `
-        <div class="border border-outline-variant/20 mb-4 hover:border-outline-variant/40 transition-colors" id="app-${app.id}">
+        <div class="border border-outline-variant/20 mb-4 hover:border-outline-variant/40 transition-all duration-200" id="app-${app.id}" style="animation: fadeSlideIn 0.35s ease both; animation-delay: ${applications.indexOf(app) * 0.04}s;">
             <!-- Summary Row -->
-            <div class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer" onclick="toggleDetails(${app.id})">
+            <div class="p-5 flex flex-col md:flex-row md:items-center justify-between gap-4 cursor-pointer select-none" onclick="toggleDetails(${app.id})">
                 <div class="flex items-center gap-4 min-w-0">
                     <div class="w-10 h-10 bg-primary-container text-white flex items-center justify-center flex-shrink-0 font-label font-bold text-sm">
                         ${getInitials(app.full_name)}
@@ -79,25 +82,27 @@ function renderApplications(applications) {
                     <div class="min-w-0">
                         <div class="flex items-center gap-3 flex-wrap">
                             <h3 class="font-headline text-lg text-primary-container">${escapeHtml(app.full_name)}</h3>
-                            <span class="status-pill ${app.status}">${app.status}</span>
+                            <span class="status-pill ${app.status}">
+                                <span class="material-symbols-outlined" style="font-size:12px">${statusIcon(app.status)}</span>
+                                ${app.status}
+                            </span>
                         </div>
                         <p class="text-on-surface-variant text-sm font-body truncate">${escapeHtml(app.email)} · ${app.subjects.length} subject${app.subjects.length !== 1 ? 's' : ''} · ${formatTimeAgo(app.created_at)}</p>
                     </div>
                 </div>
                 <div class="flex items-center gap-2 flex-shrink-0">
+                    <button class="action-btn review" onclick="event.stopPropagation(); openDetailModal(${app.id})" title="View full details">
+                        <span class="material-symbols-outlined text-base">visibility</span> View
+                    </button>
                     ${app.status === 'pending' ? `
-                        <button class="action-btn approve" onclick="event.stopPropagation(); updateStatus(${app.id}, 'approved')" title="Approve">
+                        <button class="action-btn approve" onclick="event.stopPropagation(); handleUpdateStatus(${app.id}, 'approved')" title="Approve">
                             <span class="material-symbols-outlined text-base">check</span> Approve
                         </button>
-                        <button class="action-btn reject" onclick="event.stopPropagation(); updateStatus(${app.id}, 'rejected')" title="Reject">
+                        <button class="action-btn reject" onclick="event.stopPropagation(); handleUpdateStatus(${app.id}, 'rejected')" title="Reject">
                             <span class="material-symbols-outlined text-base">close</span> Reject
                         </button>
-                    ` : `
-                        <button class="action-btn review" onclick="event.stopPropagation(); openDetailModal(${app.id})" title="View Details">
-                            <span class="material-symbols-outlined text-base">visibility</span> View
-                        </button>
-                    `}
-                    <button class="action-btn delete" onclick="event.stopPropagation(); deleteApplication(${app.id})" title="Delete">
+                    ` : ''}
+                    <button class="action-btn delete" onclick="event.stopPropagation(); handleDelete(${app.id})" title="Delete">
                         <span class="material-symbols-outlined text-base">delete</span>
                     </button>
                 </div>
@@ -147,13 +152,13 @@ function renderApplications(applications) {
                     ` : ''}
                     <div class="mt-6 pt-4 border-t border-outline-variant/10 flex items-center gap-3 flex-wrap">
                         <span class="font-label text-xs text-on-surface-variant uppercase tracking-widest">Change Status:</span>
-                        <button class="action-btn approve" onclick="updateStatus(${app.id}, 'approved')">
+                        <button class="action-btn approve" onclick="handleUpdateStatus(${app.id}, 'approved')">
                             <span class="material-symbols-outlined text-base">check_circle</span> Approve
                         </button>
-                        <button class="action-btn review" onclick="updateStatus(${app.id}, 'reviewed')">
+                        <button class="action-btn review" onclick="handleUpdateStatus(${app.id}, 'reviewed')">
                             <span class="material-symbols-outlined text-base">rate_review</span> Mark Reviewed
                         </button>
-                        <button class="action-btn reject" onclick="updateStatus(${app.id}, 'rejected')">
+                        <button class="action-btn reject" onclick="handleUpdateStatus(${app.id}, 'rejected')">
                             <span class="material-symbols-outlined text-base">block</span> Reject
                         </button>
                     </div>
@@ -172,52 +177,38 @@ function toggleDetails(id) {
 }
 
 // ===== Update Status =====
-async function updateStatus(id, status) {
-    try {
-        const res = await fetch(`/api/applications/${id}`, {
-            method: 'PATCH',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ status })
-        });
+function handleUpdateStatus(id, status) {
+    const result = ApplicationsStore.updateStatus(id, status);
+    const alertContainer = document.getElementById('alert-container');
 
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
-
-        const alertContainer = document.getElementById('alert-container');
+    if (result.success) {
         showAlert(alertContainer, `Application ${status} successfully.`, 'success');
-
-        // Refresh data
         loadStats();
         loadApplications(currentFilter);
-    } catch (err) {
-        const alertContainer = document.getElementById('alert-container');
-        showAlert(alertContainer, err.message, 'error');
+    } else {
+        showAlert(alertContainer, result.error, 'error');
     }
 }
 
 // ===== Delete Application =====
-async function deleteApplication(id) {
+function handleDelete(id) {
     if (!confirm('Are you sure you want to delete this application? This cannot be undone.')) return;
 
-    try {
-        const res = await fetch(`/api/applications/${id}`, { method: 'DELETE' });
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error);
+    const result = ApplicationsStore.remove(id);
+    const alertContainer = document.getElementById('alert-container');
 
-        const alertContainer = document.getElementById('alert-container');
+    if (result.success) {
         showAlert(alertContainer, 'Application deleted.', 'info');
-
         loadStats();
         loadApplications(currentFilter);
-    } catch (err) {
-        const alertContainer = document.getElementById('alert-container');
-        showAlert(alertContainer, err.message, 'error');
+    } else {
+        showAlert(alertContainer, result.error, 'error');
     }
 }
 
 // ===== Detail Modal =====
 function openDetailModal(id) {
-    const app = allApplications.find(a => a.id === id);
+    const app = ApplicationsStore.getById(id);
     if (!app) return;
 
     const modal = document.getElementById('detail-modal');
@@ -225,20 +216,23 @@ function openDetailModal(id) {
 
     body.innerHTML = `
         <div class="flex items-center gap-4 mb-6">
-            <div class="w-12 h-12 bg-primary-container text-white flex items-center justify-center font-label font-bold">
+            <div class="w-14 h-14 bg-primary-container text-white flex items-center justify-center font-label font-bold text-lg">
                 ${getInitials(app.full_name)}
             </div>
             <div>
                 <h3 class="font-headline text-xl text-primary-container">${escapeHtml(app.full_name)}</h3>
-                <span class="status-pill ${app.status}">${app.status}</span>
+                <span class="status-pill ${app.status}">
+                    <span class="material-symbols-outlined" style="font-size:12px">${statusIcon(app.status)}</span>
+                    ${app.status}
+                </span>
             </div>
         </div>
 
-        <div class="space-y-4">
+        <div class="space-y-5">
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <p class="font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">Email</p>
-                    <p class="font-body text-sm">${escapeHtml(app.email)}</p>
+                    <p class="font-body text-sm"><a href="mailto:${escapeHtml(app.email)}" class="text-primary-container hover:underline">${escapeHtml(app.email)}</a></p>
                 </div>
                 <div>
                     <p class="font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">Phone</p>
@@ -250,7 +244,7 @@ function openDetailModal(id) {
                 </div>
                 <div>
                     <p class="font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">Experience</p>
-                    <p class="font-body text-sm">${app.experience_years} years</p>
+                    <p class="font-body text-sm">${app.experience_years} year${app.experience_years !== 1 ? 's' : ''}</p>
                 </div>
                 <div>
                     <p class="font-label font-bold text-xs uppercase tracking-widest text-on-surface-variant mb-1">Desired Rate</p>
@@ -287,19 +281,23 @@ function openDetailModal(id) {
         </div>
 
         <div class="mt-6 pt-4 border-t border-outline-variant/20 flex items-center gap-3 flex-wrap">
-            <button class="action-btn approve" onclick="updateStatus(${app.id}, 'approved'); closeDetailModal();">
+            <button class="action-btn approve" onclick="handleUpdateStatus(${app.id}, 'approved'); closeDetailModal();">
                 <span class="material-symbols-outlined text-base">check_circle</span> Approve
             </button>
-            <button class="action-btn review" onclick="updateStatus(${app.id}, 'reviewed'); closeDetailModal();">
+            <button class="action-btn review" onclick="handleUpdateStatus(${app.id}, 'reviewed'); closeDetailModal();">
                 <span class="material-symbols-outlined text-base">rate_review</span> Mark Reviewed
             </button>
-            <button class="action-btn reject" onclick="updateStatus(${app.id}, 'rejected'); closeDetailModal();">
+            <button class="action-btn reject" onclick="handleUpdateStatus(${app.id}, 'rejected'); closeDetailModal();">
                 <span class="material-symbols-outlined text-base">block</span> Reject
             </button>
         </div>
     `;
 
     modal.classList.remove('hidden');
+    // Close on overlay click
+    modal.onclick = (e) => {
+        if (e.target === modal) closeDetailModal();
+    };
 }
 
 function closeDetailModal() {
@@ -341,9 +339,14 @@ function formatTimeAgo(dateStr) {
     return date.toLocaleDateString('en-ZA', { month: 'short', day: 'numeric' });
 }
 
+function statusIcon(status) {
+    const icons = { pending: 'schedule', reviewed: 'rate_review', approved: 'check_circle', rejected: 'cancel' };
+    return icons[status] || 'help';
+}
+
 // Expose functions globally
 window.toggleDetails = toggleDetails;
-window.updateStatus = updateStatus;
-window.deleteApplication = deleteApplication;
+window.handleUpdateStatus = handleUpdateStatus;
+window.handleDelete = handleDelete;
 window.openDetailModal = openDetailModal;
 window.closeDetailModal = closeDetailModal;
