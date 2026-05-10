@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
             subjects: p.subjects ? p.subjects.split(',') : [],
             grade_levels: p.grade_levels ? p.grade_levels.split(',') : [],
             bio: p.bio || '',
-            hourly_rate: p.hourly_rate || 0,
+            hourly_rate: Math.round((p.hourly_rate || 0) * 1.2),
             experience_years: p.experience_years || 0,
             qualification: p.qualification || '',
             rating: p.rating || 0,
