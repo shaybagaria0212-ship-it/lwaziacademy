@@ -1,11 +1,20 @@
 const mongoose = require('mongoose');
 
-const connectDB = async () => {
+let mongoURI = process.env.MONGODB_URI;
+
+const getURI = async () => {
+    if (!mongoURI) {
+        const { MongoMemoryServer } = require('mongodb-memory-server');
+        const mongoServer = await MongoMemoryServer.create();
+        mongoURI = mongoServer.getUri();
+        console.log('📦 Using In-Memory MongoDB');
+    }
+    return mongoURI;
+};
+
+const connectDB = async (uri) => {
     try {
-        const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/lwazi-academy', {
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        const conn = await mongoose.connect(uri);
         console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
     } catch (err) {
         console.error('❌ MongoDB Connection Error:', err);
@@ -13,4 +22,4 @@ const connectDB = async () => {
     }
 };
 
-module.exports = connectDB;
+module.exports = { connectDB, getURI };

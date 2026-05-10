@@ -23,7 +23,15 @@ const sendVerificationEmail = async (email, code) => {
         `
     };
     try {
-        await transporter.sendMail(mailOptions);
+        if (process.env.EMAIL_USER) {
+            await transporter.sendMail(mailOptions);
+            console.log(`📧 Verification email sent to ${email}`);
+        } else {
+            console.log(`\n==============================================`);
+            console.log(`📧 MOCK EMAIL: Verification code for ${email}`);
+            console.log(`🔑 CODE: ${code}`);
+            console.log(`==============================================\n`);
+        }
     } catch (err) {
         console.error('Error sending verification email:', err);
     }
@@ -44,7 +52,15 @@ const send2FAEmail = async (email, code) => {
         `
     };
     try {
-        await transporter.sendMail(mailOptions);
+        if (process.env.EMAIL_USER) {
+            await transporter.sendMail(mailOptions);
+            console.log(`📧 2FA email sent to ${email}`);
+        } else {
+            console.log(`\n==============================================`);
+            console.log(`📧 MOCK EMAIL: 2FA code for ${email}`);
+            console.log(`🔑 CODE: ${code}`);
+            console.log(`==============================================\n`);
+        }
     } catch (err) {
         console.error('Error sending 2FA email:', err);
     }
