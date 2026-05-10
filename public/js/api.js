@@ -200,6 +200,14 @@ class LwaziAPI {
         });
     }
 
+    // Applications
+    static async submitApplication(applicationData) {
+        return await this.request('/applications', {
+            method: 'POST',
+            body: applicationData
+        });
+    }
+
     // Helpers
     static isLoggedIn() {
         return !!this.getToken();

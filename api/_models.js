@@ -50,9 +50,24 @@ const SessionSchema = new mongoose.Schema({
     created_at: { type: Date, default: Date.now }
 });
 
+const TutorApplicationSchema = new mongoose.Schema({
+    full_name: { type: String, required: true },
+    email: { type: String, required: true, lowercase: true },
+    phone: { type: String, default: '' },
+    subjects: { type: String, required: true },
+    grade_levels: { type: String, required: true },
+    qualification: { type: String, required: true },
+    experience_years: { type: Number, default: 0 },
+    hourly_rate: { type: Number, default: 0 },
+    motivation: { type: String, default: '' },
+    status: { type: String, enum: ['pending', 'reviewed', 'approved', 'rejected'], default: 'pending' },
+    created_at: { type: Date, default: Date.now }
+});
+
 const User = getModel('User', UserSchema);
 const TutorProfile = getModel('TutorProfile', TutorProfileSchema);
 const VerificationCode = getModel('VerificationCode', VerificationCodeSchema);
 const Session = getModel('Session', SessionSchema);
+const TutorApplication = getModel('TutorApplication', TutorApplicationSchema);
 
-module.exports = { User, TutorProfile, VerificationCode, Session };
+module.exports = { User, TutorProfile, VerificationCode, Session, TutorApplication };

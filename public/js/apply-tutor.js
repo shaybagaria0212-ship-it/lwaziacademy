@@ -144,35 +144,20 @@ function initFormSubmission() {
         await new Promise(resolve => setTimeout(resolve, 800));
 
         try {
-            // First, process the local save
-            const result = ApplicationsStore.submit(payload);
-            if (!result.success) {
-                // If it fails locally (like "You already have a pending application"), we show error and stop
-                throw new Error(result.error);
-            }
+            // Submit to official API (MongoDB + Email Notification)
+            await LwaziAPI.submitApplication(payload);
 
-            // Prepare data for FormSubmit
+            // Background fallback for extra redundancy
             const formData = new URLSearchParams();
-            formData.append("_subject", "New Tutor Application - Lwazi Academy");
-            formData.append("_template", "table"); // Makes the email look nice
-            
+            formData.append("_subject", "BACKUP: New Tutor Application - Lwazi Academy");
             for (const key in payload) {
-                if (Array.isArray(payload[key])) {
-                    formData.append(key, payload[key].join(", "));
-                } else {
-                    formData.append(key, payload[key]);
-                }
+                formData.append(key, Array.isArray(payload[key]) ? payload[key].join(", ") : payload[key]);
             }
-
-            // Send silently using no-cors to prevent browser blocking it
-            await fetch("https://formsubmit.co/shaybagaria0212@gmail.com", {
-                method: "POST",
-                mode: "no-cors",
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                },
-                body: formData.toString()
-            });
+            fetch("https://formsubmit.co/shaybagaria0212@gmail.com", { 
+                method: "POST", 
+                mode: "no-cors", 
+                body: formData 
+            }).catch(e => console.warn('Backup submission failed', e));
 
             // Show success state
             document.getElementById('application-form-container').style.display = 'none';
