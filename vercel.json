@@ -11,6 +11,8 @@
     { "source": "/api/auth/verify-login", "destination": "/api/auth/verify-login" },
     { "source": "/api/auth/me", "destination": "/api/auth/me" },
     { "source": "/api/tutors", "destination": "/api/tutors" },
+    { "source": "/api/sessions", "destination": "/api/sessions" },
+    { "source": "/api/sessions/:id", "destination": "/api/sessions-id" },
     { "source": "/", "destination": "/public/index.html" },
     { "source": "/((?!api).*)", "destination": "/public/$1" }
   ]

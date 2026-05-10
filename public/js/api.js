@@ -78,10 +78,13 @@ class LwaziAPI {
     }
 
     static async verifyRegistration(email, code) {
-        return await this.request('/auth/verify-registration', {
+        const data = await this.request('/auth/verify-registration', {
             method: 'POST',
             body: { email, code }
         });
+        this.setToken(data.token);
+        this.setUser(data.user);
+        return data;
     }
 
     static async login(email, password) {

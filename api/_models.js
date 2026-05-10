@@ -39,8 +39,20 @@ const VerificationCodeSchema = new mongoose.Schema({
     expiresAt: { type: Date, required: true, index: { expires: 0 } }
 });
 
+const SessionSchema = new mongoose.Schema({
+    student_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    tutor_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    subject: { type: String, required: true },
+    scheduled_at: { type: Date, required: true },
+    duration_minutes: { type: Number, default: 60 },
+    status: { type: String, enum: ['pending', 'confirmed', 'completed', 'cancelled'], default: 'pending' },
+    notes: { type: String, default: '' },
+    created_at: { type: Date, default: Date.now }
+});
+
 const User = getModel('User', UserSchema);
 const TutorProfile = getModel('TutorProfile', TutorProfileSchema);
 const VerificationCode = getModel('VerificationCode', VerificationCodeSchema);
+const Session = getModel('Session', SessionSchema);
 
-module.exports = { User, TutorProfile, VerificationCode };
+module.exports = { User, TutorProfile, VerificationCode, Session };

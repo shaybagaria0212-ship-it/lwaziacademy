@@ -111,9 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
         
         try {
             await LwaziAPI.verifyRegistration(pendingEmail, code);
-            showAlert(alertContainer, 'Verification successful! You can now sign in.', 'success');
+            showAlert(alertContainer, 'Verification successful! You are now logged in.', 'success');
             setTimeout(() => {
-                window.location.href = '/login.html';
+                window.location.href = '/dashboard.html';
             }, 1500);
         } catch (err) {
             showAlert(alertContainer, err.message, 'error');
