@@ -47,8 +47,8 @@ function seedData(database) {
 
     const tutors = [
         {
-            email: 'thabo.mokoena@lwazi.co.za',
-            name: 'Thabo Mokoena',
+            email: 'mohammed.badat@lwazi.co.za',
+            name: 'Mohammed Badat',
             subjects: 'Mathematics,Physical Sciences',
             grades: '10,11,12',
             bio: 'Passionate about making Mathematics and Physical Sciences accessible. I hold a BSc in Applied Mathematics from Wits and have been tutoring full-time for 6 years. My students consistently achieve distinctions in the NSC.',
@@ -60,8 +60,8 @@ function seedData(database) {
             verified: 1
         },
         {
-            email: 'sarah.vandenberg@lwazi.co.za',
-            name: 'Sarah van den Berg',
+            email: 'edison.mshengu@lwazi.co.za',
+            name: 'Edison Mshengu',
             subjects: 'English Home Language,English First Additional Language,Afrikaans',
             grades: '8,9,10,11,12',
             bio: 'UCT English Honours graduate specialising in literature analysis and creative writing. I focus on building genuine comprehension and analytical skills, not just exam technique. My approach is holistic and student-centred.',

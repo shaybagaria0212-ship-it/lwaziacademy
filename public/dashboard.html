@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&family=Manrope:wght@200..800&display=swap" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="/images/logo.png" rel="icon" type="image/png"/>
     <link href="/css/shared.css" rel="stylesheet"/>
     <script>
         tailwind.config = {
@@ -151,6 +152,43 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-surface-container-high py-20 pb-32 md:pb-20 border-t border-outline-variant/10">
+        <div class="container mx-auto px-6 max-w-7xl">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center gap-3 mb-6">
+                        <img src="/images/logo.png" alt="Lwazi Academy Logo" class="h-16 w-auto object-contain" />
+                    </div>
+                    <p class="text-on-surface-variant max-w-xs font-body leading-relaxed">
+                        Redefining academic excellence through the intersection of traditional prestige and modern data-driven mentorship.
+                    </p>
+                </div>
+                <div>
+                    <h5 class="font-label font-bold text-xs uppercase tracking-widest text-primary-container mb-6">Ecosystem</h5>
+                    <ul class="space-y-4 font-body text-sm text-on-surface-variant list-none p-0">
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/tutors.html">Global Mentors</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Success Framework</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/register.html">Scholarship Program</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/apply-tutor.html">Become a Tutor</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h5 class="font-label font-bold text-xs uppercase tracking-widest text-primary-container mb-6">Legal</h5>
+                    <ul class="space-y-4 font-body text-sm text-on-surface-variant list-none p-0">
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Privacy Charter</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Terms of Excellence</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="#">Contact Registrar</a></li>
+                        <li><a class="hover:text-tertiary transition-colors no-underline" href="/admin.html">Admin Panel</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-20 pt-8 border-t border-outline-variant/20 flex flex-col md:flex-row justify-between gap-4">
+                <p class="text-label text-xs text-on-surface-variant/60">© 2024 Lwazi Academy. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="/js/api.js"></script>
     <script src="/js/auth.js"></script>
