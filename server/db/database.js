@@ -123,6 +123,19 @@ function seedData(database) {
             rating: 4.9,
             reviews: 53,
             verified: 1
+        },
+        {
+            email: 'sadiaislampromiofficials@gmail.com',
+            name: 'Sadia Islam Promi',
+            subjects: 'Mathematics,Business Studies,Economics',
+            grades: '8,9,10,11,12',
+            bio: 'I am passionate about teaching because I enjoy helping students move from confusion to confidence. For me, tutoring is not only about explaining concepts - it is about understanding how each student learns and adapting my teaching style to help them succeed academically and personally. Over my 13+ years of teaching, I have worked with students from over 15+ countries, with different educational backgrounds and learning levels, teaching subjects such as Mathematics, Business Studies, Economics, Statistics, IELTS',
+            rate: 294,
+            experience: 13,
+            qualification: 'Masters in Business Administration',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 

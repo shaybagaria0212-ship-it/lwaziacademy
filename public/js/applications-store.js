@@ -91,6 +91,20 @@ const ApplicationsStore = (() => {
             motivation: 'Environmental awareness starts in the classroom. I teach Geography and Life Sciences with a focus on South African ecosystems and real environmental challenges. I use interactive maps, field examples, and data analysis to make lessons come alive.',
             status: 'pending',
             created_at: new Date(Date.now() - 6 * 3600000).toISOString()
+        },
+        {
+            id: 7,
+            full_name: 'Sadia Islam Promi',
+            email: 'sadiaislampromiofficials@gmail.com',
+            phone: '+8801552339500',
+            subjects: ['Mathematics', 'Business Studies', 'Economics'],
+            grade_levels: ['8', '9', '10', '11', '12'],
+            qualification: 'Masters in Business Administration',
+            experience_years: 13,
+            hourly_rate: 294,
+            motivation: 'I am passionate about teaching because I enjoy helping students move from confusion to confidence. For me, tutoring is not only about explaining concepts - it is about understanding how each student learns and adapting my teaching style to help them succeed academically and personally. Over my 13+ years of teaching, I have worked with students from over 15+ countries, with different educational backgrounds and learning levels, teaching subjects such as Mathematics, Business Studies, Economics, Statistics, IELTS',
+            status: 'approved',
+            created_at: new Date(Date.now() - 1 * 3600000).toISOString()
         }
     ];
 
