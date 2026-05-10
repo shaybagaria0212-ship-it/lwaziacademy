@@ -4,7 +4,14 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
+    { "source": "/api/health", "destination": "/api/health" },
+    { "source": "/api/auth/register", "destination": "/api/auth/register" },
+    { "source": "/api/auth/verify-registration", "destination": "/api/auth/verify-registration" },
+    { "source": "/api/auth/login", "destination": "/api/auth/login" },
+    { "source": "/api/auth/verify-login", "destination": "/api/auth/verify-login" },
+    { "source": "/api/auth/me", "destination": "/api/auth/me" },
+    { "source": "/api/tutors", "destination": "/api/tutors" },
     { "source": "/", "destination": "/public/index.html" },
-    { "source": "/(.*)", "destination": "/public/$1" }
+    { "source": "/((?!api).*)", "destination": "/public/$1" }
   ]
 }

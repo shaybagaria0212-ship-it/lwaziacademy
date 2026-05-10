@@ -44,9 +44,18 @@ class LwaziAPI {
 
         try {
             const response = await fetch(url, config);
-            const data = await response.json();
+            let data;
+            try {
+                data = await response.json();
+            } catch {
+                throw new Error(`Server returned status ${response.status} with no JSON body`);
+            }
 
             if (!response.ok) {
+                // Allow caller to inspect specific flags before throwing
+                if (data.requires_verification || data.requires_2fa) {
+                    return data;
+                }
                 throw new Error(data.error || `Request failed with status ${response.status}`);
             }
 
