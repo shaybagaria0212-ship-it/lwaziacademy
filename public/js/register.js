@@ -37,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    let pendingEmail = null;
+
     // Form submission
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -84,14 +86,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
         try {
             await LwaziAPI.register(userData);
-            showAlert(alertContainer, 'Account created successfully! Redirecting...', 'success');
-            setTimeout(() => {
-                window.location.href = '/dashboard.html';
-            }, 1000);
+            pendingEmail = userData.email;
+            document.getElementById('register-form').classList.add('hidden');
+            document.getElementById('verify-form').classList.remove('hidden');
+            showAlert(alertContainer, 'Account created! Please check your email for the verification code.', 'success');
         } catch (err) {
             showAlert(alertContainer, err.message, 'error');
             submitBtn.disabled = false;
             submitBtn.innerHTML = '<span class="material-symbols-outlined text-lg">arrow_forward</span> Create Account';
+        }
+    });
+
+    const verifyForm = document.getElementById('verify-form');
+    const verifyBtn = document.getElementById('verify-btn');
+
+    verifyForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        alertContainer.innerHTML = '';
+        
+        const code = document.getElementById('verify-code').value.trim();
+        
+        verifyBtn.disabled = true;
+        verifyBtn.innerHTML = '<div class="lwazi-spinner mx-auto" style="width:20px;height:20px;border-width:2px"></div>';
+        
+        try {
+            await LwaziAPI.verifyRegistration(pendingEmail, code);
+            showAlert(alertContainer, 'Verification successful! You can now sign in.', 'success');
+            setTimeout(() => {
+                window.location.href = '/login.html';
+            }, 1500);
+        } catch (err) {
+            showAlert(alertContainer, err.message, 'error');
+            verifyBtn.disabled = false;
+            verifyBtn.innerHTML = '<span class="material-symbols-outlined text-lg">verified</span> Verify Account';
         }
     });
 });

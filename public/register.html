@@ -166,6 +166,24 @@
                 </button>
             </form>
 
+            <!-- Verification Form -->
+            <form id="verify-form" class="space-y-6 hidden mt-6">
+                <div class="text-center mb-6">
+                    <span class="material-symbols-outlined text-4xl text-tertiary-container mb-2">mark_email_read</span>
+                    <h2 class="text-2xl font-headline text-primary-container mb-2">Verify Your Email</h2>
+                    <p class="text-on-surface-variant text-sm">We've sent a 6-digit code to your email. Please enter it below.</p>
+                </div>
+                <div>
+                    <label class="lwazi-label" for="verify-code">Verification Code</label>
+                    <input class="lwazi-input" type="text" id="verify-code" name="verify-code" placeholder="Enter 6-digit code" required/>
+                </div>
+
+                <button type="submit" class="lwazi-btn-gold w-full" id="verify-btn">
+                    <span class="material-symbols-outlined text-lg">verified</span>
+                    Verify Account
+                </button>
+            </form>
+
             <p class="text-center text-on-surface-variant text-sm mt-8">
                 By creating an account, you agree to Lwazi Academy's
                 <a href="#" class="text-primary-container font-bold">Terms of Excellence</a> and

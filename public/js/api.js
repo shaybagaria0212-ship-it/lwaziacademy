@@ -61,19 +61,37 @@ class LwaziAPI {
 
     // Auth
     static async register(userData) {
-        const data = await this.request('/auth/register', {
+        return await this.request('/auth/register', {
             method: 'POST',
             body: userData
         });
-        this.setToken(data.token);
-        this.setUser(data.user);
-        return data;
+        // We don't set token here because they need to verify email first
+    }
+
+    static async verifyRegistration(email, code) {
+        return await this.request('/auth/verify-registration', {
+            method: 'POST',
+            body: { email, code }
+        });
     }
 
     static async login(email, password) {
         const data = await this.request('/auth/login', {
             method: 'POST',
             body: { email, password }
+        });
+        if (data.requires_2fa || data.requires_verification) {
+            return data;
+        }
+        this.setToken(data.token);
+        this.setUser(data.user);
+        return data;
+    }
+
+    static async verifyLogin(email, code) {
+        const data = await this.request('/auth/verify-login', {
+            method: 'POST',
+            body: { email, code }
         });
         this.setToken(data.token);
         this.setUser(data.user);
