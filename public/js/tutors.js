@@ -115,7 +115,7 @@ function renderTutorCard(tutor) {
                     <span class="font-headline text-2xl font-semibold text-primary-container">R${tutor.hourly_rate}</span>
                     <span class="text-on-surface-variant text-xs font-body">/hour</span>
                 </div>
-                <button class="lwazi-btn-gold text-xs py-3 px-6" onclick="openBookingModal(${tutor.id})">
+                <button class="lwazi-btn-gold text-xs py-3 px-6" onclick="openBookingModal('${tutor.id}')">
                     Book Session
                 </button>
             </div>
@@ -180,7 +180,7 @@ async function handleBooking(e) {
     modalAlert.innerHTML = '';
 
     const sessionData = {
-        tutor_id: Number(document.getElementById('booking-tutor-id').value),
+        tutor_id: document.getElementById('booking-tutor-id').value,
         subject: document.getElementById('booking-subject').value,
         scheduled_at: document.getElementById('booking-date').value,
         duration_minutes: Number(document.getElementById('booking-duration').value),
