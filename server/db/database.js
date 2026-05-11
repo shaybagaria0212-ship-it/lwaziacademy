@@ -136,6 +136,19 @@ function seedData(database) {
             rating: 5.0,
             reviews: 0,
             verified: 1
+        },
+        {
+            email: 'amith.pattar@gmail.com',
+            name: 'Amith Pattar',
+            subjects: 'Mathematics,Physical Sciences',
+            grades: '7,8,9,10,11,12',
+            bio: 'I believe effective teaching is not just about solving problems, but helping students deeply understand concepts and develop confidence in their abilities. With an engineering background and several years of experience teaching mathematics to students from different educational backgrounds, I focus on making learning interactive, engaging, and easy to follow. My teaching approach emphasizes conceptual clarity, logical thinking, patience, and step-by-step explanation rather than rote memorization. I strive to create a comfortable learning environment where students feel encouraged to ask questions and actively participate. I am particularly passionate about helping students overcome fear of mathematics and develop genuine interest in the subject. My goal is to help learners improve academically while also building independent problem-solving skills and long-term confidence.',
+            rate: 325,
+            experience: 5,
+            qualification: 'Bachelor’s Degree in Electrical and Electronics Engineering',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 
