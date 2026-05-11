@@ -149,6 +149,19 @@ function seedData(database) {
             rating: 5.0,
             reviews: 0,
             verified: 1
+        },
+        {
+            email: 'suhail.malik@gmail.com',
+            name: 'Suhail Gul Malik',
+            subjects: 'Mathematics,English,Economics',
+            grades: '8,9,10',
+            bio: 'I am applying to become a tutor because I enjoy helping others understand and succeed in their work. I believe that tutoring is not only about teaching information, but also about encouraging confidence, patience, and a positive attitude towards learning. Throughout my school experience, I have often helped classmates with work they struggled to understand, and I found it rewarding to see them improve once concepts were explained clearly. This showed me that I am patient, approachable, and able to communicate ideas in a way that others can understand.',
+            rate: 250,
+            experience: 5,
+            qualification: 'Post Graduation in Economics - Central University of Kashmir',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 
