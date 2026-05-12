@@ -14,6 +14,7 @@
     { "source": "/api/sessions", "destination": "/api/sessions" },
     { "source": "/api/sessions/:id", "destination": "/api/sessions-id" },
     { "source": "/api/applications", "destination": "/api/applications" },
+    { "source": "/api/seed-v3", "destination": "/api/seed-v3" },
     { "source": "/", "destination": "/public/index.html" },
     { "source": "/((?!api).*)", "destination": "/public/$1" }
   ]

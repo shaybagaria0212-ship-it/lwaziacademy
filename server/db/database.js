@@ -162,6 +162,45 @@ function seedData(database) {
             rating: 5.0,
             reviews: 0,
             verified: 1
+        },
+        {
+            email: 'thembelihlemngoma@gmail.com',
+            name: 'Thembelihle Mngoma',
+            subjects: 'isiZulu',
+            grades: '8,9,10,11,12',
+            bio: 'I am passionate about isiZulu and want to reach more students who need support in the subject. I believe language is best taught by someone who genuinely loves it, and isiZulu is something I am deeply connected to both academically and culturally. My approach focuses on conceptual clarity and cultural understanding, helping students not only improve their marks but develop a genuine appreciation for the language.',
+            rate: 300,
+            experience: 5,
+            qualification: 'Online Teaching Certificate',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
+        },
+        {
+            email: 'tundecourse@gmail.com',
+            name: 'Babatunde Olalekan',
+            subjects: 'English,Mathematics,Other',
+            grades: '8,9,10,11,12',
+            bio: 'My approach focuses on achieving tangible results through personalized mentorship and high-quality resources. I am dedicated to helping students build confidence and reach their academic goals with patience, clarity, and a commitment to excellence. Specializing in Religious studies, English, and Mathematics.',
+            rate: 700,
+            experience: 3,
+            qualification: 'BSc. English',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
+        },
+        {
+            email: 'wael-fouda@hotmail.com',
+            name: 'Wael Hazem Fouda',
+            subjects: 'Information Technology,Computer Applications Technology,Other',
+            grades: '8,9,10,11,12',
+            bio: 'I teach traders to see the market through an institutional lens—understanding price action, market structure, and the psychology behind every move. From foundational syntax to advanced strategy development, I specialize in Technical Analysis, Pine Script, AI and Machine Learning for Trading, and Data Science. Theory without practice has no place in trading education.',
+            rate: 370,
+            experience: 5,
+            qualification: 'Bachelor\'s Degree',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 
