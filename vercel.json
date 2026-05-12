@@ -14,8 +14,6 @@
     { "source": "/api/sessions", "destination": "/api/sessions" },
     { "source": "/api/sessions/:id", "destination": "/api/sessions-id" },
     { "source": "/api/applications", "destination": "/api/applications" },
-    { "source": "/api/check-db", "destination": "/api/check-db" },
-    { "source": "/api/fix-suhail", "destination": "/api/fix-suhail" },
     { "source": "/", "destination": "/public/index.html" },
     { "source": "/((?!api).*)", "destination": "/public/$1" }
   ]
