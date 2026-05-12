@@ -32,6 +32,15 @@ module.exports = async function handler(req, res) {
             review_count: p.review_count || 0,
             verified: Boolean(p.verified)
         }));
+        
+        // Deduplicate tutors by full_name and email
+        const seen = new Set();
+        tutors = tutors.filter(t => {
+            const key = `${t.full_name}-${t.email}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+        });
 
         // Filter by subject
         if (subject) {

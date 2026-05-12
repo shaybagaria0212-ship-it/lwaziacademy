@@ -138,6 +138,15 @@ class LwaziAPI {
                 { id: 9, full_name: 'Suhail Gul Malik', subjects: ['Mathematics','English','Economics'], grade_levels: ['8','9','10'], bio: 'I am applying to become a tutor because I enjoy helping others understand and succeed in their work. I believe that tutoring is not only about teaching information, but also about encouraging confidence, patience, and a positive attitude towards learning. Throughout my school experience, I have often helped classmates with work they struggled to understand, and I found it rewarding to see them improve once concepts were explained clearly. This showed me that I am patient, approachable, and able to communicate ideas in a way that others can understand.', hourly_rate: 250, experience_years: 5, rating: 5.0, review_count: 0, verified: true, qualification: 'Post Graduation in Economics - Central University of Kashmir' }
             ].map(t => ({ ...t, hourly_rate: Math.round(t.hourly_rate * 1.2) }));
 
+            // Deduplicate
+            const seen = new Set();
+            tutors = tutors.filter(t => {
+                const key = `${t.full_name}-${t.email}`;
+                if (seen.has(key)) return false;
+                seen.add(key);
+                return true;
+            });
+
             if (params.subject) {
                 tutors = tutors.filter(t => t.subjects.includes(params.subject));
             }
