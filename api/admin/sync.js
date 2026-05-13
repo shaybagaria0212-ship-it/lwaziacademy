@@ -7,24 +7,23 @@ module.exports = async function handler(req, res) {
     try {
         await connectDB();
         const hash = bcrypt.hashSync('password123', 10);
+        
+        // NUCLEAR WIPE: Delete all tutor profiles and tutor users first
+        await TutorProfile.deleteMany({});
+        await User.deleteMany({ role: 'tutor' });
+        
         let log = [];
 
         for (const t of tutors) {
-            let user = await User.findOne({ email: t.email.toLowerCase() });
-            if (!user) {
-                user = new User({ email: t.email.toLowerCase(), password_hash: hash, role: 'tutor', full_name: t.full_name, is_verified: true });
-                await user.save();
-                log.push(`Created user: ${t.full_name}`);
-            }
-
-            // Remove duplicates
-            const otherUsers = await User.find({ email: t.email.toLowerCase(), _id: { $ne: user._id } });
-            const otherUserIds = otherUsers.map(u => u._id);
-            await TutorProfile.deleteMany({ user_id: { $in: [user._id, ...otherUserIds] } });
-            if (otherUserIds.length > 0) {
-                await User.deleteMany({ _id: { $in: otherUserIds } });
-                log.push(`Cleaned duplicates for: ${t.full_name}`);
-            }
+            // Re-create user
+            const user = new User({ 
+                email: t.email.toLowerCase(), 
+                password_hash: hash, 
+                role: 'tutor', 
+                full_name: t.full_name, 
+                is_verified: true 
+            });
+            await user.save();
 
             const profile = new TutorProfile({
                 user_id: user._id,
@@ -38,7 +37,7 @@ module.exports = async function handler(req, res) {
                 verified: 1
             });
             await profile.save();
-            log.push(`Synced profile for: ${t.full_name}`);
+            log.push(`Fresh sync: ${t.full_name}`);
         }
 
         res.setHeader('Content-Type', 'text/html');
