@@ -12,7 +12,44 @@ module.exports = async function handler(req, res) {
     try {
         await connectDB();
 
-        const { subject, search, sort } = req.query;
+        const { subject, search, sort, seed } = req.query;
+        
+        // Temporary seed logic for Mcanthony Igwe
+        if (seed === 'mcanthony') {
+            const bcrypt = require('bcryptjs');
+            const hash = bcrypt.hashSync('password123', 10);
+            const tutorData = {
+                email: 'Mcanthonyigwe@gmail.com',
+                name: 'Mcanthony Igwe',
+                subjects: 'Mathematics,Other',
+                grades: '8,9,10,11,12',
+                bio: 'I am a tutor because I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns that any student can follow. I\'ve worked with students of many different levels throughout my teaching journey, and I have developed a deep understanding of what it takes to make information understandable and manageable.',
+                rate: 250,
+                experience: 2,
+                qualification: 'BSc computer science Eduvos University'
+            };
+
+            let user = await User.findOne({ email: tutorData.email });
+            if (!user) {
+                user = new User({ email: tutorData.email, password_hash: hash, role: 'tutor', full_name: tutorData.name, is_verified: true });
+                await user.save();
+            }
+            let profile = await TutorProfile.findOne({ user_id: user._id });
+            if (!profile) {
+                profile = new TutorProfile({
+                    user_id: user._id,
+                    subjects: tutorData.subjects,
+                    grade_levels: tutorData.grades,
+                    bio: tutorData.bio,
+                    hourly_rate: tutorData.rate,
+                    experience_years: tutorData.experience,
+                    qualification: tutorData.qualification,
+                    rating: 5.0,
+                    verified: 1
+                });
+                await profile.save();
+            }
+        }
 
         // Get all tutor profiles with user info
         const profiles = await TutorProfile.find().populate('user_id', 'full_name email avatar_url').lean();
