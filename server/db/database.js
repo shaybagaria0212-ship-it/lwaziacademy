@@ -201,6 +201,19 @@ function seedData(database) {
             rating: 5.0,
             reviews: 0,
             verified: 1
+        },
+        {
+            email: 'Mcanthonyigwe@gmail.com',
+            name: 'Mcanthony Igwe',
+            subjects: 'Mathematics,Other',
+            grades: '8,9,10,11,12',
+            bio: 'I am a tutor because I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns that any student can follow. I\'ve worked with students of many different levels throughout my teaching journey, and I have developed a deep understanding of what it takes to make information understandable and manageable.',
+            rate: 250,
+            experience: 2,
+            qualification: 'BSc computer science Eduvos University',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 
