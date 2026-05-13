@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const roleInput = document.getElementById('role-input');
     const studentBtn = document.getElementById('role-student-btn');
     const tutorBtn = document.getElementById('role-tutor-btn');
+    const studentFields = document.getElementById('student-fields');
     const tutorFields = document.getElementById('tutor-fields');
     const submitBtn = document.getElementById('submit-btn');
     const alertContainer = document.getElementById('alert-container');
@@ -20,14 +21,20 @@ document.addEventListener('DOMContentLoaded', () => {
         roleInput.value = 'student';
         studentBtn.classList.add('active');
         tutorBtn.classList.remove('active');
+        studentFields.classList.remove('hidden');
         tutorFields.classList.add('hidden');
+        // Clear required from tutor fields, add to student
+        document.getElementById('grade_level').required = true;
     });
 
     tutorBtn.addEventListener('click', () => {
         roleInput.value = 'tutor';
         tutorBtn.classList.add('active');
         studentBtn.classList.remove('active');
+        studentFields.classList.add('hidden');
         tutorFields.classList.remove('hidden');
+        // Clear required from student fields, add to tutor
+        document.getElementById('grade_level').required = false;
     });
 
     // Checkbox styling
@@ -58,6 +65,10 @@ document.addEventListener('DOMContentLoaded', () => {
             password: password,
             role: roleInput.value
         };
+
+        if (roleInput.value === 'student') {
+            userData.grade_level = document.getElementById('grade_level').value;
+        }
 
         if (roleInput.value === 'tutor') {
             const subjectCheckboxes = document.querySelectorAll('input[name="subjects"]:checked');

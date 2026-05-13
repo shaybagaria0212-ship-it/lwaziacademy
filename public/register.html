@@ -99,6 +99,22 @@
                     <input class="lwazi-input" type="password" id="confirm_password" placeholder="Re-enter your password" required/>
                 </div>
 
+                <!-- Student-Only Fields -->
+                <div id="student-fields" class="space-y-8">
+                    <div>
+                        <label class="lwazi-label" for="grade_level">Grade Level</label>
+                        <select class="lwazi-input" id="grade_level" name="grade_level" required>
+                            <option value="">Select your grade</option>
+                            <option value="8">Grade 8</option>
+                            <option value="9">Grade 9</option>
+                            <option value="10">Grade 10</option>
+                            <option value="11">Grade 11</option>
+                            <option value="12">Grade 12</option>
+                            <option value="Other">Other (Undergrad/Masters)</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- Tutor-Only Fields -->
                 <div id="tutor-fields" class="hidden space-y-8 pt-4 border-t border-outline-variant/30">
                     <div class="bg-surface-container-low p-6">

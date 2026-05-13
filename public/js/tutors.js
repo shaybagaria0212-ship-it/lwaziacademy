@@ -214,5 +214,13 @@ document.getElementById('booking-modal')?.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeBookingModal();
 });
 
+function resetFilters() {
+    document.getElementById('search-input').value = '';
+    document.getElementById('subject-filter').value = '';
+    document.getElementById('sort-filter').value = 'rating';
+    loadTutors();
+}
+
 window.openBookingModal = openBookingModal;
 window.closeBookingModal = closeBookingModal;
+window.resetFilters = resetFilters;
