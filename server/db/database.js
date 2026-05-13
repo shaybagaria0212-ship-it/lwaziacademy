@@ -214,6 +214,19 @@ function seedData(database) {
             rating: 5.0,
             reviews: 0,
             verified: 1
+        },
+        {
+            email: 'soniarao473@gmail.com',
+            name: 'Sonia Rao',
+            subjects: 'Mathematics',
+            grades: '4,5,6,7,8',
+            bio: 'I have good communication skills and I try to explain mathematical concepts step by step so students can learn easily. My goal is not only to help students achieve good grades but also to develop their interest in math and problem-solving abilities.',
+            rate: 555,
+            experience: 9,
+            qualification: 'Masters in Mathematics',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 

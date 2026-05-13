@@ -24,7 +24,8 @@ module.exports = async function handler(req, res) {
                 { email: 'thembelihlemngoma@gmail.com', name: 'Thembelihle Mngoma', subjects: 'isiZulu', grades: '8,9,10,11,12', rate: 300, experience: 5, qualification: 'Online Teaching Certificate', bio: 'I am passionate about isiZulu and want to reach more students who need support in the subject. My approach focuses on conceptual clarity and cultural understanding.' },
                 { email: 'tundecourse@gmail.com', name: 'Babatunde Olalekan', subjects: 'English,Mathematics,Other', grades: '8,9,10,11,12', rate: 700, experience: 3, qualification: 'BSc. English', bio: 'My approach focuses on achieving tangible results through personalized mentorship and high-quality resources. Specializing in Religious studies, English, and Mathematics.' },
                 { email: 'wael-fouda@hotmail.com', name: 'Wael Hazem Fouda', subjects: 'Information Technology,Computer Applications Technology,Other', grades: '8,9,10,11,12', rate: 370, experience: 5, qualification: 'Bachelor\'s Degree', bio: 'I teach traders to see the market through an institutional lens. Specialized in Technical Analysis, Pine Script, AI/ML for Trading, and Data Science.' },
-                { email: 'Mcanthonyigwe@gmail.com', name: 'Mcanthony Igwe', subjects: 'Mathematics,Other', grades: '8,9,10,11,12', rate: 250, experience: 2, qualification: 'BSc computer science Eduvos University', bio: 'I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns. I have a deep understanding of what it takes to make information understandable.' }
+                { email: 'Mcanthonyigwe@gmail.com', name: 'Mcanthony Igwe', subjects: 'Mathematics,Other', grades: '8,9,10,11,12', rate: 250, experience: 2, qualification: 'BSc computer science Eduvos University', bio: 'I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns. I have a deep understanding of what it takes to make information understandable.' },
+                { email: 'soniarao473@gmail.com', name: 'Sonia Rao', subjects: 'Mathematics', grades: '4,5,6,7,8', rate: 555, experience: 9, qualification: 'Masters in Mathematics', bio: 'I try to explain mathematical concepts step by step so students can learn easily. My goal is to develop their interest in math and problem-solving abilities.' }
             ];
 
             for (const t of allTutors) {
@@ -34,8 +35,13 @@ module.exports = async function handler(req, res) {
                     await user.save();
                 }
                 
-                // Clean up duplicate profiles for this user
-                await TutorProfile.deleteMany({ user_id: user._id });
+                // Clean up ALL duplicate users with the same email if any
+                const otherUsers = await User.find({ email: t.email.toLowerCase(), _id: { $ne: user._id } });
+                const otherUserIds = otherUsers.map(u => u._id);
+                
+                // Clean up ALL duplicate profiles for these users
+                await TutorProfile.deleteMany({ user_id: { $in: [user._id, ...otherUserIds] } });
+                if (otherUserIds.length > 0) await User.deleteMany({ _id: { $in: otherUserIds } });
                 
                 const profile = new TutorProfile({
                     user_id: user._id,
