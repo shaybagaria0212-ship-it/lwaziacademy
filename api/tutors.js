@@ -14,36 +14,37 @@ module.exports = async function handler(req, res) {
 
         const { subject, search, sort, seed } = req.query;
         
-        // Temporary seed logic for Mcanthony Igwe
-        if (seed === 'mcanthony') {
+        // Master Seed Logic
+        if (seed === 'master') {
             const bcrypt = require('bcryptjs');
             const hash = bcrypt.hashSync('password123', 10);
-            const tutorData = {
-                email: 'Mcanthonyigwe@gmail.com',
-                name: 'Mcanthony Igwe',
-                subjects: 'Mathematics,Other',
-                grades: '8,9,10,11,12',
-                bio: 'I am a tutor because I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns that any student can follow. I\'ve worked with students of many different levels throughout my teaching journey, and I have developed a deep understanding of what it takes to make information understandable and manageable.',
-                rate: 250,
-                experience: 2,
-                qualification: 'BSc computer science Eduvos University'
-            };
+            const allTutors = [
+                { email: 'amith.pattar@gmail.com', name: 'Amith Pattar', subjects: 'Mathematics,Physical Sciences', grades: '7,8,9,10,11,12', rate: 325, experience: 5, qualification: 'Bachelor’s Degree in Electrical and Electronics Engineering', bio: 'I focus on making learning interactive, engaging, and easy to follow. My goal is to help learners improve academically while also building independent problem-solving skills and long-term confidence.' },
+                { email: 'suhail.malik@gmail.com', name: 'Suhail Gul Malik', subjects: 'Mathematics,English,Economics', grades: '8,9,10', rate: 250, experience: 5, qualification: 'Post Graduation in Economics - Central University of Kashmir', bio: 'I enjoy helping others understand and succeed in their work. I believe that tutoring is not only about teaching information, but also about encouraging confidence, patience, and a positive attitude towards learning.' },
+                { email: 'thembelihlemngoma@gmail.com', name: 'Thembelihle Mngoma', subjects: 'isiZulu', grades: '8,9,10,11,12', rate: 300, experience: 5, qualification: 'Online Teaching Certificate', bio: 'I am passionate about isiZulu and want to reach more students who need support in the subject. My approach focuses on conceptual clarity and cultural understanding.' },
+                { email: 'tundecourse@gmail.com', name: 'Babatunde Olalekan', subjects: 'English,Mathematics,Other', grades: '8,9,10,11,12', rate: 700, experience: 3, qualification: 'BSc. English', bio: 'My approach focuses on achieving tangible results through personalized mentorship and high-quality resources. Specializing in Religious studies, English, and Mathematics.' },
+                { email: 'wael-fouda@hotmail.com', name: 'Wael Hazem Fouda', subjects: 'Information Technology,Computer Applications Technology,Other', grades: '8,9,10,11,12', rate: 370, experience: 5, qualification: 'Bachelor\'s Degree', bio: 'I teach traders to see the market through an institutional lens. Specialized in Technical Analysis, Pine Script, AI/ML for Trading, and Data Science.' },
+                { email: 'Mcanthonyigwe@gmail.com', name: 'Mcanthony Igwe', subjects: 'Mathematics,Other', grades: '8,9,10,11,12', rate: 250, experience: 2, qualification: 'BSc computer science Eduvos University', bio: 'I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns. I have a deep understanding of what it takes to make information understandable.' }
+            ];
 
-            let user = await User.findOne({ email: tutorData.email });
-            if (!user) {
-                user = new User({ email: tutorData.email, password_hash: hash, role: 'tutor', full_name: tutorData.name, is_verified: true });
-                await user.save();
-            }
-            let profile = await TutorProfile.findOne({ user_id: user._id });
-            if (!profile) {
-                profile = new TutorProfile({
+            for (const t of allTutors) {
+                let user = await User.findOne({ email: t.email.toLowerCase() });
+                if (!user) {
+                    user = new User({ email: t.email.toLowerCase(), password_hash: hash, role: 'tutor', full_name: t.name, is_verified: true });
+                    await user.save();
+                }
+                
+                // Clean up duplicate profiles for this user
+                await TutorProfile.deleteMany({ user_id: user._id });
+                
+                const profile = new TutorProfile({
                     user_id: user._id,
-                    subjects: tutorData.subjects,
-                    grade_levels: tutorData.grades,
-                    bio: tutorData.bio,
-                    hourly_rate: tutorData.rate,
-                    experience_years: tutorData.experience,
-                    qualification: tutorData.qualification,
+                    subjects: t.subjects,
+                    grade_levels: t.grades,
+                    bio: t.bio,
+                    hourly_rate: t.rate,
+                    experience_years: t.experience,
+                    qualification: t.qualification,
                     rating: 5.0,
                     verified: 1
                 });
