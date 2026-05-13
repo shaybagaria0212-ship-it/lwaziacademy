@@ -12,51 +12,7 @@ module.exports = async function handler(req, res) {
     try {
         await connectDB();
 
-        const { subject, search, sort, seed } = req.query;
-        
-        // Master Seed Logic
-        if (seed === 'master') {
-            const bcrypt = require('bcryptjs');
-            const hash = bcrypt.hashSync('password123', 10);
-            const allTutors = [
-                { email: 'amith.pattar@gmail.com', name: 'Amith Pattar', subjects: 'Mathematics,Physical Sciences', grades: '7,8,9,10,11,12', rate: 325, experience: 5, qualification: 'Bachelor’s Degree in Electrical and Electronics Engineering', bio: 'I focus on making learning interactive, engaging, and easy to follow. My goal is to help learners improve academically while also building independent problem-solving skills and long-term confidence.' },
-                { email: 'suhail.malik@gmail.com', name: 'Suhail Gul Malik', subjects: 'Mathematics,English,Economics', grades: '8,9,10', rate: 250, experience: 5, qualification: 'Post Graduation in Economics - Central University of Kashmir', bio: 'I enjoy helping others understand and succeed in their work. I believe that tutoring is not only about teaching information, but also about encouraging confidence, patience, and a positive attitude towards learning.' },
-                { email: 'thembelihlemngoma@gmail.com', name: 'Thembelihle Mngoma', subjects: 'isiZulu', grades: '8,9,10,11,12', rate: 300, experience: 5, qualification: 'Online Teaching Certificate', bio: 'I am passionate about isiZulu and want to reach more students who need support in the subject. My approach focuses on conceptual clarity and cultural understanding.' },
-                { email: 'tundecourse@gmail.com', name: 'Babatunde Olalekan', subjects: 'English,Mathematics,Other', grades: '8,9,10,11,12', rate: 700, experience: 3, qualification: 'BSc. English', bio: 'My approach focuses on achieving tangible results through personalized mentorship and high-quality resources. Specializing in Religious studies, English, and Mathematics.' },
-                { email: 'wael-fouda@hotmail.com', name: 'Wael Hazem Fouda', subjects: 'Information Technology,Computer Applications Technology,Other', grades: '8,9,10,11,12', rate: 370, experience: 5, qualification: 'Bachelor\'s Degree', bio: 'I teach traders to see the market through an institutional lens. Specialized in Technical Analysis, Pine Script, AI/ML for Trading, and Data Science.' },
-                { email: 'Mcanthonyigwe@gmail.com', name: 'Mcanthony Igwe', subjects: 'Mathematics,Other', grades: '8,9,10,11,12', rate: 250, experience: 2, qualification: 'BSc computer science Eduvos University', bio: 'I enjoy breaking complex ideas in mathematics and chess into recognizable and digestible patterns. I have a deep understanding of what it takes to make information understandable.' },
-                { email: 'soniarao473@gmail.com', name: 'Sonia Rao', subjects: 'Mathematics', grades: '4,5,6,7,8', rate: 555, experience: 9, qualification: 'Masters in Mathematics', bio: 'I try to explain mathematical concepts step by step so students can learn easily. My goal is to develop their interest in math and problem-solving abilities.' }
-            ];
-
-            for (const t of allTutors) {
-                let user = await User.findOne({ email: t.email.toLowerCase() });
-                if (!user) {
-                    user = new User({ email: t.email.toLowerCase(), password_hash: hash, role: 'tutor', full_name: t.name, is_verified: true });
-                    await user.save();
-                }
-                
-                // Clean up ALL duplicate users with the same email if any
-                const otherUsers = await User.find({ email: t.email.toLowerCase(), _id: { $ne: user._id } });
-                const otherUserIds = otherUsers.map(u => u._id);
-                
-                // Clean up ALL duplicate profiles for these users
-                await TutorProfile.deleteMany({ user_id: { $in: [user._id, ...otherUserIds] } });
-                if (otherUserIds.length > 0) await User.deleteMany({ _id: { $in: otherUserIds } });
-                
-                const profile = new TutorProfile({
-                    user_id: user._id,
-                    subjects: t.subjects,
-                    grade_levels: t.grades,
-                    bio: t.bio,
-                    hourly_rate: t.rate,
-                    experience_years: t.experience,
-                    qualification: t.qualification,
-                    rating: 5.0,
-                    verified: 1
-                });
-                await profile.save();
-            }
-        }
+        const { subject, search, sort } = req.query;
 
         // Get all tutor profiles with user info
         const profiles = await TutorProfile.find().populate('user_id', 'full_name email avatar_url').lean();
