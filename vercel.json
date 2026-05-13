@@ -5,11 +5,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/api/health", "destination": "/api/health" },
-    { "source": "/api/auth/register", "destination": "/api/auth/register" },
-    { "source": "/api/auth/verify-registration", "destination": "/api/auth/verify-registration" },
-    { "source": "/api/auth/login", "destination": "/api/auth/login" },
-    { "source": "/api/auth/verify-login", "destination": "/api/auth/verify-login" },
-    { "source": "/api/auth/me", "destination": "/api/auth/me" },
+    { "source": "/api/auth/:action", "destination": "/api/auth" },
     { "source": "/api/tutors", "destination": "/api/tutors" },
     { "source": "/api/sessions", "destination": "/api/sessions" },
     { "source": "/api/sessions/:id", "destination": "/api/sessions-id" },
