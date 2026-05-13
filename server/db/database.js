@@ -227,6 +227,32 @@ function seedData(database) {
             rating: 5.0,
             reviews: 0,
             verified: 1
+        },
+        {
+            email: 'mathstatlablessons@gmail.com',
+            name: 'Justus Mwanthi',
+            subjects: 'Mathematics,Statistics,Other',
+            grades: '8,10,11,12,Other',
+            bio: 'I am Justus Mwanthi, a mathematics and statistics tutor with more than six years of experience teaching students from middle school to postgraduate level. I specialize in simplifying difficult concepts and guiding students step by step until they fully understand the work.',
+            rate: 215,
+            experience: 6,
+            qualification: 'BSc (Pure Mathematics, Applied Mathematics, and Statistics) – Kisii University',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
+        },
+        {
+            email: 'courtney.stuart@example.com',
+            name: 'Courtney Stuart',
+            subjects: 'English',
+            grades: '8,9,10,11,12',
+            bio: 'Hello there! I am Courtney, a tutor with over 6 years experience being an educator. I believe lessons should have an engaging element such as games...',
+            rate: 110,
+            experience: 6,
+            qualification: 'National Diploma in Early Childhood Development- ATS',
+            rating: 5.0,
+            reviews: 0,
+            verified: 1
         }
     ];
 
